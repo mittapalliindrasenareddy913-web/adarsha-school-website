@@ -68,14 +68,14 @@ export default function App() {
     <ThemeProvider>
       <SiteProvider>
         <AdminAuthProvider>
-          <div className="min-h-screen flex flex-col font-sans transition-colors duration-300">
+          <div className="min-h-screen flex flex-col font-sans transition-colors duration-300 w-full max-w-full overflow-x-hidden">
             <ScrollToTopOnRoute />
             
             {/* Render Public Header Navbar only on public pages */}
             {!isAdminRoute && <Navbar />}
 
             {/* Main Route Viewport */}
-            <main className="flex-grow">
+            <main className="flex-grow w-full max-w-full overflow-x-hidden">
               <Routes>
                 {/* PUBLIC WEBSITE ROUTES */}
                 <Route path="/" element={<Home />} />

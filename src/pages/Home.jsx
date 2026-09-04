@@ -188,7 +188,7 @@ export default function Home() {
       {/* ==================================================
           1. FULL-WIDTH PHOTOGRAPHIC HERO SECTION (DESKTOP & MOBILE)
          ================================================== */}
-      <section className="relative min-h-[460px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-start bg-[#0B192C] text-white overflow-hidden py-8 sm:py-12 px-4 sm:px-8 lg:px-16 border-b border-slate-800">
+      <section className="relative min-h-[380px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-start bg-[#0B192C] text-white overflow-hidden py-6 sm:py-12 px-4 sm:px-8 lg:px-16 border-b border-slate-800">
         
         {/* Dynamic Cloudflare R2 Hero Background (Uploaded by Principal/Admin in Admin Panel) */}
         {siteData?.heroMediaType === 'R2_VIDEO' && siteData?.heroVideoUrl ? (
@@ -207,8 +207,8 @@ export default function Home() {
           />
         )}
         
-        {/* Cinematic Left-to-Right Overlay (Desktop: Left text readability, Right photo visibility) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B192C]/92 via-[#0B192C]/65 to-transparent sm:via-[#0B192C]/60 sm:to-black/10" />
+        {/* Cinematic Left-to-Right Overlay (Desktop: Left text readability, Mobile: Lighter gradient so hero photo is clearly visible) */}
+        <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-[#0B192C]/80 via-[#0B192C]/45 to-black/20" />
 
         {/* Hero Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto w-full">

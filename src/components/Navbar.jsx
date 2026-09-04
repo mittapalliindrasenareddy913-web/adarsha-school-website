@@ -166,20 +166,20 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           
           {/* Brand Logo & Title */}
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
             {siteSettings?.logo ? (
               <img
                 src={siteSettings.logo}
                 alt={schoolName}
-                className="w-10 h-10 sm:w-11 sm:h-11 object-contain rounded-lg transition-transform group-hover:scale-105 shrink-0"
+                className="w-9 h-9 sm:w-11 sm:h-11 object-contain rounded-lg transition-transform group-hover:scale-105 shrink-0"
               />
             ) : (
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[#0B192C] text-amber-400 flex items-center justify-center font-black shadow-xs transition-transform group-hover:scale-105 shrink-0 border border-slate-800">
-                <GraduationCap className="w-6 h-6" />
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg bg-[#0B192C] text-amber-400 flex items-center justify-center font-black shadow-xs transition-transform group-hover:scale-105 shrink-0 border border-slate-800">
+                <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
             )}
             <div className="flex flex-col min-w-0">
-              <span className="text-base sm:text-xl font-black tracking-tight text-[#0B192C] group-hover:text-blue-900 transition-colors truncate uppercase">
+              <span className="text-sm sm:text-xl font-black tracking-tight text-[#0B192C] group-hover:text-blue-900 transition-colors truncate uppercase">
                 {schoolName}
               </span>
             </div>
@@ -274,7 +274,7 @@ export default function Navbar() {
                   <motion.div
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 6 }}
+                    exit={{ opacity: 0, y: 0 }}
                     transition={{ duration: 0.15 }}
                     className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-slate-200 p-2 space-y-1 z-50"
                   >
@@ -434,7 +434,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2.5 shrink-0">
             <Link
               to="/admissions"
-              className="inline-flex items-center gap-1 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg font-bold text-xs bg-[#D97706] hover:bg-[#B45309] text-white shadow-xs active:scale-95 transition-all uppercase tracking-wider"
+              className="hidden sm:inline-flex items-center gap-1 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-lg font-bold text-xs bg-[#D97706] hover:bg-[#B45309] text-white shadow-xs active:scale-95 transition-all uppercase tracking-wider"
             >
               <span>ENQUIRE NOW</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -455,14 +455,14 @@ export default function Navbar() {
 
       {/* 3. RESPONSIVE NOTICE TICKER (100% VISIBLE ON BOTH DESKTOP AND MOBILE) */}
       {tickerAnnouncements.length > 0 && (
-        <div className="bg-[#D97706] text-white text-xs font-bold py-2 px-3 sm:px-4 overflow-hidden border-b border-amber-600/40 relative z-30">
-          <div className="max-w-7xl mx-auto flex items-center gap-2.5">
+        <div className="bg-[#D97706] text-white text-xs font-bold py-2 px-3 sm:px-4 overflow-hidden border-b border-amber-600/40 relative z-30 w-full max-w-full">
+          <div className="max-w-7xl mx-auto flex items-center gap-2.5 w-full min-w-0">
             <div className="flex items-center gap-1 shrink-0 px-2 py-0.5 rounded bg-[#0B192C] text-amber-400 text-[10px] font-black uppercase tracking-wider shadow-xs">
               <BellRing className="w-3.5 h-3.5 animate-pulse text-amber-400" />
               <span>NOTICE</span>
             </div>
             
-            <div className="overflow-hidden whitespace-nowrap flex-1 relative">
+            <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0 relative">
               <div className="animate-marquee gap-6 inline-flex items-center">
                 {[...tickerAnnouncements, ...tickerAnnouncements].map((item, idx) => (
                   <Link
