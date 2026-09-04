@@ -4,6 +4,21 @@ import { api } from '../../services/api';
 import SEO from '../../components/SEO';
 import { Search, Trash2, Eye, X, Filter } from 'lucide-react';
 
+function formatTargetClass(targetClass) {
+  if (!targetClass) return 'N/A';
+  const clean = targetClass.trim();
+  if (clean === 'Pre-Primary' || clean.startsWith('Pre-Primary')) {
+    return 'Pre-Primary (Nursery to UKG)';
+  }
+  if (clean === 'Primary' || clean === 'Primary School (Grade I to V)' || clean === 'Primary (Grade I-V)') {
+    return 'Primary (Grade 1 to 5)';
+  }
+  if (clean === 'High School' || clean.includes('Secondary') || clean.includes('High School') || clean.includes('Middle')) {
+    return 'High School (Grade 6 to 10)';
+  }
+  return targetClass;
+}
+
 export default function AdmissionsAdmin() {
   const context = useOutletContext();
   const refreshUnread = context?.refreshUnread;
@@ -13,13 +28,14 @@ export default function AdmissionsAdmin() {
   const [statusFilter, setStatusFilter] = useState('All');
   const [yearFilter, setYearFilter] = useState('All');
   const [readFilter, setReadFilter] = useState('All');
+  const [gradeFilter, setGradeFilter] = useState('All');
   const [search, setSearch] = useState('');
 
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
 
   useEffect(() => {
     loadEnquiries();
-  }, [statusFilter, yearFilter, readFilter, search]);
+  }, [statusFilter, yearFilter, readFilter, gradeFilter, search]);
 
   async function loadEnquiries() {
     setLoading(true);
@@ -28,6 +44,7 @@ export default function AdmissionsAdmin() {
         status: statusFilter,
         academicYear: yearFilter,
         readState: readFilter === 'Unread Only' ? 'unread' : readFilter === 'Read Only' ? 'read' : 'All',
+        targetClass: gradeFilter,
         search
       });
       if (res.success) setEnquiries(res.data);
@@ -120,9 +137,24 @@ export default function AdmissionsAdmin() {
               onChange={(e) => setReadFilter(e.target.value)}
               className="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-50/70 border border-amber-200 text-slate-800"
             >
-              <option value="All">All</option>
+              <option value="All">All Read States</option>
               <option value="Unread Only">Unread Only</option>
               <option value="Read Only">Read Only</option>
+            </select>
+          </div>
+
+          {/* Grade Category Filter */}
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-600">Grade:</span>
+            <select
+              value={gradeFilter}
+              onChange={(e) => setGradeFilter(e.target.value)}
+              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-50/70 border border-amber-200 text-slate-800"
+            >
+              <option value="All">All Grades</option>
+              <option value="Pre-Primary">Pre-Primary (Nursery to UKG)</option>
+              <option value="Primary">Primary (Grade 1 to 5)</option>
+              <option value="High School">High School (Grade 6 to 10)</option>
             </select>
           </div>
 
@@ -185,7 +217,7 @@ export default function AdmissionsAdmin() {
                     <td className="p-4 font-bold text-slate-900">{item.parentName}</td>
                     <td className="p-4 text-slate-700">{item.studentName}</td>
                     <td className="p-4 text-slate-700">{item.phone}</td>
-                    <td className="p-4 text-slate-600">{item.targetClass}</td>
+                    <td className="p-4 text-slate-600">{formatTargetClass(item.targetClass)}</td>
                     <td className="p-4">
                       <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 inline-block">
                         {item.academicYear || '2026–27'}
@@ -242,7 +274,7 @@ export default function AdmissionsAdmin() {
               <p><strong className="text-slate-900">Student Name:</strong> {selectedEnquiry.studentName}</p>
               <p><strong className="text-slate-900">Phone:</strong> {selectedEnquiry.phone}</p>
               <p><strong className="text-slate-900">Email:</strong> {selectedEnquiry.email || 'N/A'}</p>
-              <p><strong className="text-slate-900">Target Grade:</strong> {selectedEnquiry.targetClass}</p>
+              <p><strong className="text-slate-900">Target Grade:</strong> {formatTargetClass(selectedEnquiry.targetClass)}</p>
               <p><strong className="text-slate-900">Submission Date:</strong> {new Date(selectedEnquiry.createdAt).toLocaleString()}</p>
               <div className="pt-2 border-t border-amber-100">
                 <strong className="text-slate-900 block mb-1">Message / Notes:</strong>

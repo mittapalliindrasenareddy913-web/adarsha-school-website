@@ -10,7 +10,7 @@ import { CheckCircle2, ChevronDown, Send, Sparkles, FileText, Phone, AlertCircle
 const faqs = [
   {
     q: "What academic grades are open for admission?",
-    a: "Admissions are generally offered for foundational grades, primary classes, middle school, and secondary preparation classes, subject to seat availability per class grade."
+    a: "Admissions are offered for Pre-Primary (Nursery to UKG), Primary (Grade 1 to 5), and High School (Grade 6 to 10) levels, subject to seat availability per grade."
   },
   {
     q: "What is the procedure for campus interaction?",
@@ -38,7 +38,7 @@ export default function Admissions() {
     studentName: '',
     phone: '',
     email: '',
-    targetClass: 'Primary (Grade I-V)',
+    targetClass: 'Pre-Primary',
     message: ''
   });
 
@@ -160,7 +160,7 @@ export default function Admissions() {
                         studentName: '',
                         phone: '',
                         email: '',
-                        targetClass: 'Primary (Grade I-V)',
+                        targetClass: 'Pre-Primary',
                         message: ''
                       });
                     }}
@@ -260,9 +260,9 @@ export default function Admissions() {
                       onChange={handleChange}
                       className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B192C] bg-white disabled:opacity-60"
                     >
-                      <option value="Primary (Grade I-V)">Primary School (Grade I to V)</option>
-                      <option value="Middle (Grade VI-VIII)">Middle School (Grade VI to VIII)</option>
-                      <option value="Secondary (Grade IX-X)">High School / Secondary (Grade IX to X)</option>
+                      <option value="Pre-Primary">Pre-Primary (Nursery to UKG)</option>
+                      <option value="Primary">Primary (Grade 1 to 5)</option>
+                      <option value="High School">High School (Grade 6 to 10)</option>
                     </select>
                   </div>
 
