@@ -113,7 +113,7 @@ export default function AdminLayout() {
               </div>
               <div className="hidden sm:block text-left min-w-0">
                 <span className="text-xs font-bold text-slate-900 block leading-none truncate">
-                  {admin?.email || 'Adarshatmpl@gmail.com'}
+                  {admin?.email || 'Administrator'}
                 </span>
                 <span className="text-[10px] text-amber-800 font-semibold">Super Admin</span>
               </div>

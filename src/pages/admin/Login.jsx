@@ -5,8 +5,8 @@ import SEO from '../../components/SEO';
 import { ShieldCheck, Eye, EyeOff, Lock, Mail, ArrowRight, KeyRound } from 'lucide-react';
 
 export default function Login() {
-  const [email, setEmail] = useState('Adarshatmpl@gmail.com');
-  const [password, setPassword] = useState('Heshika@0099');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   
   const [loading, setLoading] = useState(false);
@@ -26,11 +26,11 @@ export default function Login() {
       if (res && res.success) {
         navigate('/admin/dashboard');
       } else {
-        setError(res?.message || 'Invalid admin email address or password.');
+        setError('Invalid email or password.');
       }
     } catch (err) {
       setLoading(false);
-      setError('Connection error. Please check your credentials and try again.');
+      setError('Invalid email or password.');
     }
   };
 
@@ -46,18 +46,6 @@ export default function Login() {
           </div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Adarsha CMS Portal</h1>
           <p className="text-xs text-slate-600">School Management System Authentication</p>
-        </div>
-
-        {/* Credentials Card */}
-        <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-slate-800 text-xs space-y-1.5">
-          <div className="flex items-center gap-1.5 font-bold text-amber-950">
-            <KeyRound className="w-4 h-4 shrink-0 text-amber-700" />
-            <span>Admin CMS Credentials</span>
-          </div>
-          <div className="space-y-0.5 text-[11px]">
-            <div><span className="text-slate-500">Email:</span> <strong className="text-slate-900 select-all font-bold">Adarshatmpl@gmail.com</strong></div>
-            <div><span className="text-slate-500">Password:</span> <strong className="text-slate-900 select-all font-bold">Heshika@0099</strong></div>
-          </div>
         </div>
 
         {error && (
@@ -76,7 +64,7 @@ export default function Login() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Adarshatmpl@gmail.com"
+                placeholder="admin@school.com"
                 className="w-full pl-11 pr-4 py-3 bg-white border border-amber-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
               />
             </div>
@@ -91,7 +79,7 @@ export default function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Heshika@0099"
+                placeholder="••••••••"
                 className="w-full pl-11 pr-11 py-3 bg-white border border-amber-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
               />
               <button

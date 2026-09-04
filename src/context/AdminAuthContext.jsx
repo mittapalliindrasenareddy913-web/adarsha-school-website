@@ -7,65 +7,48 @@ export function AdminAuthProvider({ children }) {
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check auth session on load
+  // Check auth session on load with 3.5s fast timeout to prevent hanging
   useEffect(() => {
+    let isMounted = true;
     async function checkAuth() {
       try {
-        const res = await api.adminCheckAuth();
-        if (res && res.success && res.user) {
+        const checkPromise = api.adminCheckAuth();
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Auth check timeout')), 3500)
+        );
+
+        const res = await Promise.race([checkPromise, timeoutPromise]);
+        if (isMounted && res && res.success && res.user) {
           setAdmin(res.user);
           setLoading(false);
           return;
         }
       } catch (err) {
-        // Backend offline fallback check
+        // Session not active or backend cold start timeout
       }
 
-      const savedSession = localStorage.getItem('adarsha_admin_session');
-      if (savedSession) {
-        try {
-          setAdmin(JSON.parse(savedSession));
-        } catch (e) {
-          setAdmin(null);
-        }
-      } else {
+      if (isMounted) {
         setAdmin(null);
+        setLoading(false);
       }
-      setLoading(false);
     }
     checkAuth();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const login = async (email, password) => {
-    // 1. Try real API authentication first
     try {
       const res = await api.adminLogin(email, password);
       if (res && res.success && res.user) {
         setAdmin(res.user);
-        localStorage.setItem('adarsha_admin_session', JSON.stringify(res.user));
-        return res;
+        return { success: true, user: res.user };
       }
+      return { success: false, message: 'Invalid email or password.' };
     } catch (err) {
-      // API call failed or backend offline, fallback to verified credentials below
+      return { success: false, message: 'Invalid email or password.' };
     }
-
-    // 2. Verified Admin Credentials: Adarshatmpl@gmail.com / Heshika@0099
-    const cleanEmail = (email || '').trim().toLowerCase();
-    if (
-      (cleanEmail === 'adarshatmpl@gmail.com' && password === 'Heshika@0099') ||
-      (cleanEmail === 'admin@adarshaemschool.edu.in' && password === 'admin123')
-    ) {
-      const userData = {
-        email: email.trim(),
-        role: 'superadmin',
-        name: 'School Administrator'
-      };
-      setAdmin(userData);
-      localStorage.setItem('adarsha_admin_session', JSON.stringify(userData));
-      return { success: true, user: userData };
-    }
-
-    return { success: false, message: 'Invalid admin email address or password.' };
   };
 
   const logout = async () => {
@@ -74,7 +57,6 @@ export function AdminAuthProvider({ children }) {
     } catch (e) {
       // Ignore
     } finally {
-      localStorage.removeItem('adarsha_admin_session');
       setAdmin(null);
     }
   };
