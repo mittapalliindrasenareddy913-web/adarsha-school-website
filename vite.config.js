@@ -17,5 +17,8 @@ export default defineConfig({
     port: 5173,
     host: true,
     allowedHosts: true,
+  },
+  build: {
+    sourcemap: false
   }
 })
