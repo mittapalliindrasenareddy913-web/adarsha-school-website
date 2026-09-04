@@ -33,7 +33,7 @@ export default function CTASection() {
           </h2>
 
           <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-            Begin your child's journey toward knowledge, confidence and lifelong success at Adarsha E.M. School, Kadiri.
+            Begin your child's journey toward knowledge, confidence and lifelong success at Adarsha High School, Thamballapalle.
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">

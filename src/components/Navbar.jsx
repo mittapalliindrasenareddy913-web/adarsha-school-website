@@ -40,7 +40,7 @@ export default function Navbar() {
   const primaryPhone = siteSettings?.contact?.phonePrimary || '+91 98765 43210';
   const primaryEmail = siteSettings?.contact?.email || 'info@adarshaemschool.edu.in';
   const workingHours = siteSettings?.contact?.workingHours || 'Mon - Sat: 8:30 AM – 4:30 PM';
-  const addressShort = siteSettings?.location?.landmark || siteSettings?.location?.address || 'Kadiri, Andhra Pradesh';
+  const addressShort = siteSettings?.location?.landmark || siteSettings?.location?.address || 'Cross Road, Thamballapalle';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,10 +106,10 @@ export default function Navbar() {
       <div className="bg-[#0B192C] text-slate-200 text-[11px] font-medium py-2 px-3 sm:px-4 border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           
-          {/* Mobile Utility Bar: KADIRI, AP (Left) | Phone (Right) */}
+          {/* Mobile Utility Bar: THAMBALLAPALLE, AP (Left) | Phone (Right) */}
           <div className="flex items-center gap-1.5 text-slate-200 font-extrabold sm:hidden">
             <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span className="uppercase tracking-wider">KADIRI, AP</span>
+            <span className="uppercase tracking-wider">THAMBALLAPALLE, AP</span>
           </div>
 
           <div className="flex items-center gap-1.5 text-amber-400 font-extrabold sm:hidden">
@@ -122,7 +122,7 @@ export default function Navbar() {
             <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span className="font-semibold">{addressShort}</span>
             <span className="text-slate-600">|</span>
-            <span className="text-slate-400">State Board Recognized • English Medium</span>
+            <span className="text-slate-400">State Board Recognized • High School</span>
           </div>
 
           <div className="hidden sm:flex items-center gap-4 text-slate-300 shrink-0">

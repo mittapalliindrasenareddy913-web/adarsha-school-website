@@ -181,8 +181,8 @@ export default function Home() {
   return (
     <div className="font-sans min-h-screen bg-[#F8FAFC] text-[#0F172A]">
       <SEO
-        title="Adarsha E.M. School | Kadiri, Andhra Pradesh"
-        description="Official portal of Adarsha English Medium School, Kadiri. Providing quality English medium education combining academic rigor, smart learning tools, and traditional values."
+        title="Adarsha High School | Thamballapalle, Andhra Pradesh"
+        description="Official portal of Adarsha High School, Thamballapalle. Providing quality education combining academic rigor, smart learning tools, and traditional values."
       />
 
       {/* ==================================================
@@ -198,11 +198,11 @@ export default function Home() {
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 transition-all duration-700"
           />
         ) : (
           <div
-            className="absolute inset-0 bg-cover bg-center transition-all duration-700"
+            className="absolute inset-0 bg-cover bg-center opacity-60 sm:opacity-75 transition-all duration-700"
             style={{ backgroundImage: `url(${siteData?.heroImage || images.heroBg})` }}
           />
         )}
@@ -219,7 +219,7 @@ export default function Home() {
             {/* Eyebrow Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest bg-[#0B192C]/80 backdrop-blur-md text-amber-400 border border-amber-500/30 shadow-md">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>ADARSHA E.M. SCHOOL • KADIRI, AP</span>
+              <span>ADARSHA HIGH SCHOOL • THAMBALLAPALLE, AP</span>
             </div>
 
             {/* Headline */}
@@ -230,7 +230,7 @@ export default function Home() {
 
             {/* Supporting Text */}
             <p className="text-slate-200 text-sm sm:text-base font-medium leading-relaxed max-w-xl drop-shadow-xs">
-              An environment where young minds learn, explore, create, and prepare for tomorrow with quality English medium education in Kadiri.
+              An environment where young minds learn, explore, create, and prepare for tomorrow with quality education in Thamballapalle.
             </p>
 
             {/* Action Buttons */}
@@ -346,7 +346,7 @@ export default function Home() {
                       LEADERSHIP DESK
                     </span>
                     <h4 className="text-sm font-extrabold text-white">Correspondent / Principal Desk</h4>
-                    <p className="text-[11px] text-slate-300">Adarsha E.M. School, Kadiri</p>
+                    <p className="text-[11px] text-slate-300">Adarsha High School, Thamballapalle</p>
                   </div>
                 </div>
               ) : (
@@ -356,7 +356,7 @@ export default function Home() {
                   </div>
                   <div className="space-y-1">
                     <h4 className="text-lg font-black tracking-wide text-white uppercase">PRINCIPAL / LEADERSHIP PHOTO</h4>
-                    <p className="text-xs text-slate-300">Adarsha E.M. School, Kadiri</p>
+                    <p className="text-xs text-slate-300">Adarsha High School, Thamballapalle</p>
                   </div>
                   <span className="text-[10px] font-semibold text-amber-400/80 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
                     Principal photo can be uploaded via Admin CMS
@@ -378,7 +378,7 @@ export default function Home() {
             </div>
 
             <p className="text-slate-700 text-xs sm:text-sm leading-relaxed">
-              {displaySite?.aboutText || "Adarsha English Medium School in Kadiri is dedicated to empowering young learners through academic excellence, structured discipline, and strong moral values."}
+              {displaySite?.aboutText || "Adarsha High School in Thamballapalle is dedicated to empowering young learners through academic excellence, structured discipline, and strong moral values."}
             </p>
 
             <div className="pt-2">
@@ -734,7 +734,7 @@ export default function Home() {
               Admissions Open for {admissionYear}
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-              Empower your child with quality English medium education, modern learning tools, and strong moral values in Kadiri.
+              Empower your child with quality education, modern learning tools, and strong moral values in Thamballapalle.
             </p>
           </div>
 

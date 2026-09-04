@@ -1,5 +1,5 @@
 // Centralized school data configuration for Adarsha E.M. School client demo.
-// Factual details verified from Google Maps location: Adarsha E.M. School, Kadiri, Anantapur District, Andhra Pradesh.
+// Factual details verified from Google Maps location: Adarsha E.M. School, Thamballapalle, Andhra Pradesh.
 // Unverified metrics (phone numbers, specific affiliations, staff names) are clearly marked with demo placeholders.
 
 export const schoolData = {
@@ -10,8 +10,8 @@ export const schoolData = {
   
   // Location & Contact (Verified Google Maps details + marked demo phone/email)
   location: {
-    address: "Kadiri, Anantapur District, Andhra Pradesh 515591, India",
-    landmark: "Near Main Road, Kadiri Region",
+    address: "Cross Road, Thamballapalle, Andhra Pradesh, India",
+    landmark: "Cross Road, Thamballapalle",
     lat: 13.8244027,
     lng: 78.4483544,
     googleMapsUrl: "https://maps.app.goo.gl/SkHq86FABbvmB51J6",
@@ -181,7 +181,7 @@ export const schoolData = {
     {
       id: "transport",
       title: "School Transport Fleet",
-      description: "Safe, comfortable school buses covering major routes in Kadiri and surrounding towns with dedicated attendants.",
+      description: "Safe, comfortable school buses covering major routes in Thamballapalle and surrounding towns with dedicated attendants.",
       icon: "Bus",
       imageKey: "transportation",
       features: ["GPS Tracking Facilities", "Trained Drivers & Bus Attendants", "Emergency First Aid Kits", "Structured Route Timings"]
@@ -273,7 +273,7 @@ export const schoolData = {
     {
       step: "01",
       title: "Inquiry & Campus Tour",
-      description: "Submit an online enquiry form or visit our campus in Kadiri to meet our academic counselors."
+      description: "Submit an online enquiry form or visit our campus in Thamballapalle to meet our academic counselors."
     },
     {
       step: "02",
@@ -307,7 +307,7 @@ export const schoolData = {
     name: "Correspondent / Principal",
     title: "Leadership Desk",
     quote: "Education is not merely the accumulation of facts, but the training of the mind to think, moral courage to act, and character to lead.",
-    message: "Welcome to Adarsha E.M. School, Kadiri. Our mission is to nurture confident, ethically grounded, and intellectually curious young minds. We provide a safe, supportive environment where academic rigor meets joyful discovery. We invite parents to partner with us in shaping a bright and fulfilling future for every child.",
+    message: "Welcome to Adarsha High School, Thamballapalle. Our mission is to nurture confident, ethically grounded, and intellectually curious young minds. We provide a safe, supportive environment where academic rigor meets joyful discovery. We invite parents to partner with us in shaping a bright and fulfilling future for every child.",
     imageKey: "principal"
   },
 

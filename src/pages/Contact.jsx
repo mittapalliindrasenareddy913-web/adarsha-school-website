@@ -55,8 +55,8 @@ export default function Contact() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="Contact Us & Campus Location | Adarsha E.M. School"
-        description="Get in touch with Adarsha E.M. School administration in Kadiri. Campus address, phone numbers, email, and Google Maps directions."
+        title="Contact Us & Campus Location | Adarsha High School"
+        description="Get in touch with Adarsha High School administration in Thamballapalle. Campus address, phone numbers, email, and Google Maps directions."
       />
 
       <PageHero

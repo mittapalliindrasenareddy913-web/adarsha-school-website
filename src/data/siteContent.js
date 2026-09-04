@@ -33,8 +33,8 @@ export const siteContent = {
 
   // Location & Contact (Marked as editable placeholders)
   location: {
-    address: "Kadiri Region, Anantapur District, Andhra Pradesh 515591, India",
-    landmark: "Near Main Road, Kadiri",
+    address: "Cross Road, Thamballapalle, Andhra Pradesh, India",
+    landmark: "Cross Road, Thamballapalle",
     googleMapsUrl: "https://maps.app.goo.gl/SkHq86FABbvmB51J6",
     embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15444.6!2d78.4483544!3d13.8244027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb2455cd9c3208f%3A0xed5d454df6a552a5!2sAdarsha%20E.M%20school!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
     note: "Editable location placeholder"

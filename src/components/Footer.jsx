@@ -7,7 +7,7 @@ export default function Footer() {
   const { siteSettings } = useSiteSettings();
 
   const schoolName = siteSettings?.schoolName || 'Adarsha E.M. School';
-  const address = siteSettings?.location?.address || 'Kadiri Region, Anantapur District, Andhra Pradesh 515591, India';
+  const address = siteSettings?.location?.address || 'Cross Road, Thamballapalle, Andhra Pradesh, India';
   const phonePrimary = siteSettings?.contact?.phonePrimary || '+91 98765 43210';
   const phoneSecondary = siteSettings?.contact?.phoneSecondary;
   const whatsappNumber = siteSettings?.contact?.whatsappNumber || '919876543210';
@@ -51,7 +51,7 @@ export default function Footer() {
                   {schoolName}
                 </span>
                 <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">
-                  Kadiri, Andhra Pradesh
+                  Thamballapalle, Andhra Pradesh
                 </span>
               </div>
             </Link>
@@ -62,7 +62,7 @@ export default function Footer() {
             </h3>
 
             <p className="text-xs text-slate-300 max-w-sm leading-relaxed font-normal">
-              Providing structured English medium education in Kadiri with academic rigor, digital smart learning aids, and traditional Indian moral values.
+              Providing structured education in Thamballapalle with academic rigor, digital smart learning aids, and traditional Indian moral values.
             </p>
 
             <div className="flex items-center gap-3 pt-2">
@@ -175,7 +175,7 @@ export default function Footer() {
         {/* Bottom Rights */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 text-center sm:text-left">
           <div>
-            © {new Date().getFullYear()} {schoolName}, Kadiri. All Rights Reserved.
+            © {new Date().getFullYear()} {schoolName}, Thamballapalle. All Rights Reserved.
           </div>
 
           <div>

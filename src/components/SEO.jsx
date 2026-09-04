@@ -9,7 +9,7 @@ export default function SEO({ title, description, canonical }) {
 
   const schoolName = siteSettings?.schoolName || 'Adarsha E.M. School';
   const defaultSiteTitle = siteSettings?.seo?.siteTitle || `${schoolName} | Where Curiosity Becomes Confidence`;
-  const defaultMetaDesc = siteSettings?.seo?.metaDescription || 'Official portal of Adarsha English Medium School, Kadiri. Empowering young minds with academic rigor and moral values.';
+  const defaultMetaDesc = siteSettings?.seo?.metaDescription || 'Official portal of Adarsha High School, Thamballapalle. Empowering young minds with academic rigor and moral values.';
 
   useEffect(() => {
     const fullTitle = title 

@@ -1,13 +1,13 @@
 # Adarsha E.M. School — Client Demo Website
 
-A premium, modern, professional, and fully responsive school website demo built for **Adarsha E.M. School**, located in **Kadiri, Anantapur District, Andhra Pradesh, India**.
+A premium, modern, professional, and fully responsive school website demo built for **Adarsha High School**, located in **Thamballapalle, Andhra Pradesh, India**.
 
 ---
 
 ## 🌟 Key Features
 
 - **Real Multi-Page Routing**: Powered by `react-router-dom` v6 with smooth scroll restoration.
-- **Client Demo Ready**: Factual location information verified from Google Maps (`13.8244, 78.4483`). Unverified metrics (phone numbers, specific staff names, fees) are clearly marked with subtle `DemoNotice` badges.
+- **Client Demo Ready**: Factual location information verified from Google Maps. Unverified metrics (phone numbers, specific staff names, fees) are clearly marked with subtle `DemoNotice` badges.
 - **Centralized Data & Image Management**:
   - `src/data/schoolData.js` — Change school name, tagline, contact numbers, address, stats, navigation links, and developer agency attribution.
   - `src/data/images.js` — Single source of truth for all campus, classroom, science lab, library, sports, and gallery photos.
@@ -15,7 +15,7 @@ A premium, modern, professional, and fully responsive school website demo built 
 - **Interactive Lightbox Gallery**: Fullscreen image modal with category filtering (Campus, Classrooms, Events, Sports, Activities), Next/Previous navigation, and captions.
 - **Validated Forms**: Premium Admission Enquiry and Contact forms with real-time validation, loading states, and animated success confirmation cards.
 - **Floating Action Buttons**: Persistent WhatsApp enquiry button and sticky mobile Call Now bar.
-- **Embedded Google Maps**: Real location map centered on Kadiri, AP with "Get Directions" link.
+- **Embedded Google Maps**: Real location map centered on Thamballapalle, AP with "Get Directions" link.
 
 ---
 

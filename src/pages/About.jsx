@@ -21,14 +21,14 @@ export default function About() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="About Our School | Adarsha E.M. School"
-        description="Learn about Adarsha E.M. School history, leadership values, educational vision, and mission in Kadiri."
+        title="About Our School | Adarsha High School"
+        description="Learn about Adarsha High School history, leadership values, educational vision, and mission in Thamballapalle."
       />
 
       <PageHero
         eyebrow="OUR STORY & PHILOSOPHY"
         title="More than a school. A foundation for life."
-        subtitle="Adarsha E.M. School provides a structured, supportive learning environment dedicated to developing curious, responsible, and ethical students."
+        subtitle="Adarsha High School provides a structured, supportive learning environment dedicated to developing curious, responsible, and ethical students."
         bgImage={siteData?.leadershipPhoto || images.aboutCampus}
         badgeBg="bg-emerald-600"
         badgeBorder="border-emerald-400/40"
@@ -53,7 +53,7 @@ export default function About() {
                     <Award className="w-8 h-8" />
                   </div>
                   <h4 className="text-lg font-bold">Correspondent / Principal Desk</h4>
-                  <p className="text-xs text-slate-300">Adarsha E.M. School, Kadiri</p>
+                  <p className="text-xs text-slate-300">Adarsha High School, Thamballapalle</p>
                 </div>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
@@ -63,7 +63,7 @@ export default function About() {
                   Leadership Message
                 </span>
                 <h4 className="text-xl font-extrabold">Correspondent / Principal Desk</h4>
-                <p className="text-xs text-slate-300">Adarsha E.M. School, Kadiri</p>
+                <p className="text-xs text-slate-300">Adarsha High School, Thamballapalle</p>
               </div>
             </div>
           </div>

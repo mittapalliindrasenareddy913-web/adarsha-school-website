@@ -124,7 +124,7 @@ export default function AdmissionForm() {
             Thank You for Your Enquiry!
           </h3>
           <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
-            We have received your admission request for <strong className="text-slate-900">{formData.studentName}</strong> ({formData.grade}). Our admission counselor in Kadiri will contact you shortly.
+            We have received your admission request for <strong className="text-slate-900">{formData.studentName}</strong> ({formData.grade}). Our admission counselor in Thamballapalle will contact you shortly.
           </p>
         </div>
 

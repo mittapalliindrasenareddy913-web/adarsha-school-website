@@ -78,8 +78,8 @@ export default function Admissions() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title={`Admission Academic Year ${admissionYear} | Adarsha E.M. School`}
-        description={`Submit an admission enquiry for Academic Session ${admissionYear} at Adarsha E.M. School, Kadiri.`}
+        title={`Admission Academic Year ${admissionYear} | Adarsha High School`}
+        description={`Submit an admission enquiry for Academic Session ${admissionYear} at Adarsha High School, Thamballapalle.`}
       />
 
       <PageHero
@@ -102,7 +102,7 @@ export default function Admissions() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
           {[
-            { step: "01", title: "ENQUIRE", desc: "Submit the online inquiry form below or visit our campus office in Kadiri." },
+            { step: "01", title: "ENQUIRE", desc: "Submit the online inquiry form below or visit our campus office in Thamballapalle." },
             { step: "02", title: "APPLY", desc: "Complete the official registration form with student certificates." },
             { step: "03", title: "INTERACT", desc: "Informal interaction session to review student readiness and grade placement." },
             { step: "04", title: "JOIN", desc: "Confirm fee formalities, document verification, and seat allotment." }
