@@ -37,9 +37,10 @@ export default function Navbar() {
   const { siteSettings } = useSiteSettings();
 
   const schoolName = siteSettings?.schoolName || 'Adarsha E.M. School';
-  const primaryPhone = siteSettings?.contact?.phonePrimary || '+91 98765 43210';
-  const primaryEmail = siteSettings?.contact?.email || 'info@adarshaemschool.edu.in';
-  const rawLandmark = siteSettings?.location?.landmark || siteSettings?.location?.address || 'Cross Road, Thamballapalle';
+  const primaryPhone = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
+  const primaryEmail = String(siteSettings?.contact?.email || 'info@adarshaemschool.edu.in');
+  const workingHours = String(siteSettings?.contact?.workingHours || 'Mon - Sat: 8:30 AM – 4:30 PM');
+  const rawLandmark = String(siteSettings?.location?.landmark || siteSettings?.location?.address || 'Cross Road, Thamballapalle');
   const addressShort = rawLandmark.replace(/Near Main Road,\s*Kadiri/gi, 'Cross Road, Thamballapalle').replace(/Kadiri/gi, 'Thamballapalle');
 
   useEffect(() => {

@@ -7,14 +7,14 @@ export default function Footer() {
   const { siteSettings } = useSiteSettings();
 
   const schoolName = siteSettings?.schoolName || 'Adarsha E.M. School';
-  const address = siteSettings?.location?.address || 'Cross Road, Thamballapalle, Andhra Pradesh, India';
-  const phonePrimary = siteSettings?.contact?.phonePrimary || '+91 98765 43210';
-  const phoneSecondary = siteSettings?.contact?.phoneSecondary;
-  const whatsappNumber = siteSettings?.contact?.whatsappNumber || '919876543210';
-  const email = siteSettings?.contact?.email || 'info@adarshaemschool.edu.in';
-  const admissionsEmail = siteSettings?.contact?.admissionsEmail || siteSettings?.contact?.email || 'admissions@adarshaemschool.edu.in';
-  const workingHours = siteSettings?.contact?.workingHours || 'Monday to Saturday: 8:30 AM – 4:30 PM';
-  const googleMapsUrl = siteSettings?.location?.googleMapsUrl || 'https://maps.app.goo.gl/SkHq86FABbvmB51J6';
+  const address = String(siteSettings?.location?.address || 'Cross Road, Thamballapalle, Andhra Pradesh, India');
+  const phonePrimary = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
+  const phoneSecondary = siteSettings?.contact?.phoneSecondary ? String(siteSettings.contact.phoneSecondary) : '';
+  const whatsappNumber = String(siteSettings?.contact?.whatsappNumber || '919876543210');
+  const email = String(siteSettings?.contact?.email || 'info@adarshaemschool.edu.in');
+  const admissionsEmail = String(siteSettings?.contact?.admissionsEmail || siteSettings?.contact?.email || 'admissions@adarshaemschool.edu.in');
+  const workingHours = String(siteSettings?.contact?.workingHours || 'Monday to Saturday: 8:30 AM – 4:30 PM');
+  const googleMapsUrl = String(siteSettings?.location?.googleMapsUrl || 'https://maps.app.goo.gl/SkHq86FABbvmB51J6');
 
   const devText = siteSettings?.developerCredit?.text || 'Designed & Developed by';
   const devBrand = siteSettings?.developerCredit?.brandName || 'ISR WEBDESIGN';

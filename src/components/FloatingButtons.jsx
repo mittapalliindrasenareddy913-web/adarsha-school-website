@@ -6,7 +6,7 @@ import { Phone, MessageSquare, Sparkles } from 'lucide-react';
 export default function FloatingButtons() {
   const { siteSettings, getWhatsAppUrl } = useSiteSettings();
 
-  const primaryPhone = siteSettings?.contact?.phonePrimary || '+91 98765 43210';
+  const primaryPhone = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
   const whatsappUrl = getWhatsAppUrl('Hello Adarsha E.M. School, I would like to enquire about admissions.');
 
   return (
@@ -20,8 +20,8 @@ export default function FloatingButtons() {
         aria-label="Chat on WhatsApp"
         title="Chat on WhatsApp"
       >
-        <MessageSquare className="w-6 h-6 fill-current" />
-        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap text-xs font-bold pr-1">
+        <MessageSquare className="w-5 h-5 text-white" />
+        <span className="hidden group-hover:inline-block text-xs font-extrabold pr-1 transition-all">
           WhatsApp Enquiry
         </span>
       </a>
