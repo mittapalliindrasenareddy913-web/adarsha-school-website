@@ -5,7 +5,7 @@ import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
 import SectionHeading from '../components/SectionHeading';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, Sparkles, BookOpen } from 'lucide-react';
+import { ShieldCheck, Award, Sparkles, BookOpen, Calendar, GraduationCap, Heart, CheckCircle2 } from 'lucide-react';
 
 export default function About() {
   const [siteData, setSiteData] = useState(null);
@@ -18,6 +18,18 @@ export default function About() {
     loadData();
   }, []);
 
+  const about = siteData?.about || {};
+
+  // Paragraph helper
+  const renderParagraphs = (text) => {
+    if (!text) return null;
+    return text.split('\n\n').map((p, idx) => (
+      <p key={idx} className="text-slate-700 text-sm sm:text-base leading-relaxed mb-4 last:mb-0">
+        {p.trim()}
+      </p>
+    ));
+  };
+
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
@@ -28,14 +40,14 @@ export default function About() {
       <PageHero
         eyebrow="OUR STORY & PHILOSOPHY"
         title="More than a school. A foundation for life."
-        subtitle="Adarsha High School provides a structured, supportive learning environment dedicated to developing curious, responsible, and ethical students."
-        bgImage={siteData?.leadershipPhoto || images.aboutCampus}
+        subtitle={about.heroSubtitle || "Adarsha High School provides a structured, supportive learning environment dedicated to developing curious, responsible, and ethical students."}
+        bgImage={about.aboutImage || siteData?.leadershipPhoto || images.aboutCampus}
         badgeBg="bg-emerald-600"
         badgeBorder="border-emerald-400/40"
         gradientTo="to-emerald-950/60"
       />
 
-      {/* Leadership Desk Message */}
+      {/* 1. LEADERSHIP DESK MESSAGE */}
       <section id="leadership" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28 space-y-12">
         <SectionHeading
           badge="LEADERSHIP DESK"
@@ -44,7 +56,7 @@ export default function About() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {/* 1. CORRESPONDENT PROFILE */}
+          {/* CORRESPONDENT PROFILE */}
           {(siteData?.leadership?.correspondent?.enabled ?? true) && (() => {
             const corr = siteData?.leadership?.correspondent || {};
             const photo = corr.photo || siteData?.leadershipPhoto;
@@ -101,7 +113,7 @@ export default function About() {
             );
           })()}
 
-          {/* 2. PRINCIPAL PROFILE */}
+          {/* PRINCIPAL PROFILE */}
           {(siteData?.leadership?.principal?.enabled ?? true) && (() => {
             const prin = siteData?.leadership?.principal || {};
             const photo = prin.photo;
@@ -160,34 +172,100 @@ export default function About() {
         </div>
       </section>
 
-      {/* Vision & Mission */}
+      {/* 2. INTRODUCTION & HISTORY (LONG-FORM STORY) */}
+      {(about.introduction || about.history) && (
+        <section id="story" className="py-16 sm:py-24 bg-white border-y border-slate-200 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <SectionHeading
+              badge="OUR FOUNDATION"
+              title="Building Character & Academic Excellence"
+              subtitle="The history, origin, and community values shaping Adarsha High School."
+            />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {about.introduction && (
+                <div className="p-8 rounded-2xl bg-[#F8FAFC] border border-slate-200 space-y-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-extrabold">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-xl font-extrabold text-[#0B192C]">Welcome & Introduction</h3>
+                  <div>{renderParagraphs(about.introduction)}</div>
+                </div>
+              )}
+
+              {about.history && (
+                <div className="p-8 rounded-2xl bg-[#F8FAFC] border border-slate-200 space-y-4">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-extrabold">
+                    <GraduationCap className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-xl font-extrabold text-[#0B192C]">School History & Growth</h3>
+                  <div>{renderParagraphs(about.history)}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 3. MILESTONES & JOURNEY TIMELINE */}
+      {Array.isArray(about.journey) && about.journey.length > 0 && (
+        <section id="timeline" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+          <SectionHeading
+            badge="OUR JOURNEY"
+            title="Key Historical Milestones"
+            subtitle="Evolution of Adarsha High School over the years."
+          />
+
+          <div className="relative border-l-2 border-emerald-500/30 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-8">
+            {about.journey.map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                className="relative bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2"
+              >
+                <div className="absolute -left-[31px] sm:-left-[47px] top-6 w-5 h-5 rounded-full bg-emerald-600 border-4 border-white shadow-xs" />
+                <span className="text-xs font-black uppercase tracking-widest text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block">
+                  {item.year}
+                </span>
+                <h4 className="text-lg font-extrabold text-[#0B192C]">{item.title}</h4>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 4. VISION & MISSION */}
       <section id="vision" className="py-16 sm:py-24 bg-[#0B192C] text-white border-y border-slate-800 px-4 sm:px-6 lg:px-8 scroll-mt-28">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           
-          <div className="p-8 rounded-lg bg-[#1E3E62]/40 border border-emerald-500/20 space-y-4 relative overflow-hidden">
-            <div className="w-12 h-12 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold shadow-xs">
+          <div className="p-8 rounded-2xl bg-[#1E3E62]/40 border border-emerald-500/20 space-y-4 relative overflow-hidden">
+            <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-xs">
               <Sparkles className="w-6 h-6" />
             </div>
             <h3 className="text-2xl font-extrabold text-white">Our Vision</h3>
             <p className="text-slate-300 text-sm leading-relaxed">
-              To be a leading educational institution in the region recognized for fostering academic excellence, moral integrity, and modern technological readiness in young learners.
+              {about.vision || "To be a leading educational institution in the region recognized for fostering academic excellence, moral integrity, and modern technological readiness in young learners."}
             </p>
           </div>
 
-          <div className="p-8 rounded-lg bg-[#1E3E62]/40 border border-teal-500/20 space-y-4 relative overflow-hidden">
-            <div className="w-12 h-12 rounded-lg bg-teal-600 text-white flex items-center justify-center font-bold shadow-xs">
+          <div className="p-8 rounded-2xl bg-[#1E3E62]/40 border border-teal-500/20 space-y-4 relative overflow-hidden">
+            <div className="w-12 h-12 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold shadow-xs">
               <BookOpen className="w-6 h-6" />
             </div>
             <h3 className="text-2xl font-extrabold text-white">Our Mission</h3>
             <p className="text-slate-300 text-sm leading-relaxed">
-              To empower every student through conceptual learning, disciplined habits, sports participation, and moral values in a supportive, safe educational atmosphere.
+              {about.mission || "To empower every student through conceptual learning, disciplined habits, sports participation, and moral values in a supportive, safe educational atmosphere."}
             </p>
           </div>
 
         </div>
       </section>
 
-      {/* Core Values */}
+      {/* 5. CORE VALUES */}
       <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <SectionHeading
           badge="OUR CORE VALUES"
@@ -196,21 +274,21 @@ export default function About() {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {(siteData?.values || [
+          {(about.values?.length ? about.values : (siteData?.values || [
             { name: "Excellence", desc: "Striving for high standards in academic and personal growth." },
             { name: "Integrity", desc: "Upholding honesty, respect, and ethical principles in all actions." },
             { name: "Curiosity", desc: "Encouraging continuous questioning, discovery, and active learning." },
             { name: "Compassion", desc: "Fostering empathy, kindness, and strong community responsibility." }
-          ]).map((val, idx) => (
+          ])).map((val, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="p-6 rounded-lg bg-white border border-slate-200 border-t-2 border-t-emerald-600 shadow-xs hover:shadow-md transition-all space-y-3"
+              className="p-6 rounded-2xl bg-white border border-slate-200 border-t-4 border-t-emerald-600 shadow-xs hover:shadow-md transition-all space-y-3"
             >
-              <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center font-extrabold text-sm">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center font-extrabold text-sm">
                 0{idx + 1}
               </div>
               <h3 className="text-lg font-extrabold text-[#0B192C]">{val.name}</h3>
@@ -219,6 +297,62 @@ export default function About() {
           ))}
         </div>
       </section>
+
+      {/* 6. EDUCATIONAL PHILOSOPHY & TEACHING APPROACH */}
+      {(about.philosophy || about.approach) && (
+        <section className="py-16 sm:py-24 bg-white border-t border-slate-200 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <SectionHeading
+              badge="ACADEMIC METHODOLOGY"
+              title="Educational Philosophy & Teaching Approach"
+              subtitle="How we teach, mentor, and inspire student learning."
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {about.philosophy && (
+                <div className="p-8 rounded-2xl bg-[#F8FAFC] border border-slate-200 space-y-4">
+                  <h3 className="text-xl font-extrabold text-[#0B192C]">Educational Philosophy</h3>
+                  <div>{renderParagraphs(about.philosophy)}</div>
+                </div>
+              )}
+
+              {about.approach && (
+                <div className="p-8 rounded-2xl bg-[#F8FAFC] border border-slate-200 space-y-4">
+                  <h3 className="text-xl font-extrabold text-[#0B192C]">Teaching & Learning Approach</h3>
+                  <div>{renderParagraphs(about.approach)}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 7. STUDENT DEVELOPMENT & ADDITIONAL INFO */}
+      {(about.studentDevelopment || about.additionalInfo) && (
+        <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {about.studentDevelopment && (
+              <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-4">
+                <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-800 border border-teal-200 flex items-center justify-center font-bold">
+                  <Award className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#0B192C]">Student Development & Holistic Care</h3>
+                <div>{renderParagraphs(about.studentDevelopment)}</div>
+              </div>
+            )}
+
+            {about.additionalInfo && (
+              <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-4">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center font-bold">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#0B192C]">Recognition & Institutional Details</h3>
+                <div>{renderParagraphs(about.additionalInfo)}</div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
     </div>
   );

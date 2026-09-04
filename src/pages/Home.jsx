@@ -191,9 +191,9 @@ export default function Home() {
       <section className="relative min-h-[380px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-start bg-[#0B192C] text-white overflow-hidden py-6 sm:py-12 px-4 sm:px-8 lg:px-16 border-b border-slate-800">
         
         {/* Dynamic Cloudflare R2 Hero Background (Uploaded by Principal/Admin in Admin Panel) */}
-        {siteData?.heroMediaType === 'R2_VIDEO' && siteData?.heroVideoUrl ? (
+        {(displaySite?.home?.heroMediaType || siteData?.heroMediaType) === 'R2_VIDEO' && (displaySite?.home?.heroVideoUrl || siteData?.heroVideoUrl) ? (
           <video
-            src={siteData.heroVideoUrl}
+            src={displaySite?.home?.heroVideoUrl || siteData.heroVideoUrl}
             autoPlay
             loop
             muted
@@ -203,7 +203,7 @@ export default function Home() {
         ) : (
           <div
             className="absolute inset-0 bg-cover bg-center opacity-60 sm:opacity-75 transition-all duration-700"
-            style={{ backgroundImage: `url(${siteData?.heroImage || images.heroBg})` }}
+            style={{ backgroundImage: `url(${displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg})` }}
           />
         )}
         
@@ -224,13 +224,12 @@ export default function Home() {
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white font-sans drop-shadow-md">
-              Shaping Curious Minds. <br />
-              <span className="text-[#D97706]">Building Confident Futures.</span>
+              {displaySite?.home?.heroTagline || displaySite?.tagline || "Shaping Curious Minds. Building Confident Futures."}
             </h1>
 
             {/* Supporting Text */}
             <p className="text-slate-200 text-sm sm:text-base font-medium leading-relaxed max-w-xl drop-shadow-xs">
-              An environment where young minds learn, explore, create, and prepare for tomorrow with quality education in Thamballapalle.
+              {displaySite?.home?.heroSubTagline || displaySite?.subTagline || "An environment where young minds learn, explore, create, and prepare for tomorrow with quality education in Thamballapalle."}
             </p>
 
             {/* Action Buttons */}

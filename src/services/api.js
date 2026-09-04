@@ -328,5 +328,11 @@ export const api = {
   },
   async adminUpdateSettings(data) {
     return await fetchAPI('/admin/settings', { method: 'PUT', body: data });
+  },
+  async adminUpdateHomeSettings(data) {
+    return await fetchAPI('/admin/settings/home', { method: 'PUT', body: data });
+  },
+  async adminUpdateAboutSettings(data) {
+    return await fetchAPI('/admin/settings/about', { method: 'PUT', body: data });
   }
 };

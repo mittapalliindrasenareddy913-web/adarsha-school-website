@@ -1,23 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 import SEO from '../../components/SEO';
-import { Save, Check, Image, Video, Play } from 'lucide-react';
+import { Save, Image, Video, Play } from 'lucide-react';
 import MediaUploader from '../../components/MediaUploader';
 import { useSiteSettings } from '../../context/SiteContext';
 
 export default function HomeContentAdmin() {
   const { refreshSiteSettings } = useSiteSettings();
-  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState('');
+
+  const [homeData, setHomeData] = useState({
+    heroTagline: '',
+    heroSubTagline: '',
+    heroMediaType: 'IMAGE',
+    heroImage: '',
+    heroVideoUrl: '',
+    heroYouTubeUrl: '',
+    aboutSectionHeading: 'Welcome to Adarsha High School',
+    aboutText: ''
+  });
 
   useEffect(() => {
     async function loadData() {
       try {
         const res = await api.adminGetSettings();
-        if (res.success) {
-          setSettings(res.data);
+        if (res.success && res.data) {
+          const s = res.data;
+          setHomeData({
+            heroTagline: s.home?.heroTagline || s.tagline || '',
+            heroSubTagline: s.home?.heroSubTagline || s.subTagline || '',
+            heroMediaType: s.home?.heroMediaType || s.heroMediaType || 'IMAGE',
+            heroImage: s.home?.heroImage || s.heroImage || '',
+            heroVideoUrl: s.home?.heroVideoUrl || s.heroVideoUrl || '',
+            heroYouTubeUrl: s.home?.heroYouTubeUrl || s.heroYouTubeUrl || '',
+            aboutSectionHeading: s.home?.aboutSectionHeading || 'Welcome to Adarsha High School',
+            aboutText: s.home?.aboutText || ''
+          });
         }
       } catch (err) {
         console.error(err);
@@ -34,10 +54,21 @@ export default function HomeContentAdmin() {
     setMsg('');
 
     try {
-      const res = await api.adminUpdateSettings(settings);
+      const res = await api.adminUpdateHomeSettings({ home: homeData });
       setSaving(false);
       if (res.success) {
-        setSettings(res.data);
+        if (res.data?.home) {
+          setHomeData({
+            heroTagline: res.data.home.heroTagline || '',
+            heroSubTagline: res.data.home.heroSubTagline || '',
+            heroMediaType: res.data.home.heroMediaType || 'IMAGE',
+            heroImage: res.data.home.heroImage || '',
+            heroVideoUrl: res.data.home.heroVideoUrl || '',
+            heroYouTubeUrl: res.data.home.heroYouTubeUrl || '',
+            aboutSectionHeading: res.data.home.aboutSectionHeading || 'Welcome to Adarsha High School',
+            aboutText: res.data.home.aboutText || ''
+          });
+        }
         await refreshSiteSettings();
         setMsg('Homepage Hero settings updated successfully!');
       } else {
@@ -57,7 +88,7 @@ export default function HomeContentAdmin() {
 
       <div>
         <h1 className="text-2xl font-extrabold text-[#4a3e3d] tracking-tight">Homepage Content Manager</h1>
-        <p className="text-xs font-semibold text-[#6e5d5c]">Control hero section copy, media type toggle (Image / Video / YouTube), and CTA links.</p>
+        <p className="text-xs font-semibold text-[#6e5d5c]">Control hero section copy, media type toggle (Image / Video / YouTube), and homepage introductory text.</p>
       </div>
 
       {msg && (
@@ -76,9 +107,9 @@ export default function HomeContentAdmin() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <button
               type="button"
-              onClick={() => setSettings({ ...settings, heroMediaType: 'IMAGE' })}
+              onClick={() => setHomeData({ ...homeData, heroMediaType: 'IMAGE' })}
               className={`p-4 rounded-2xl border flex items-center justify-center gap-3 font-bold text-xs transition-all ${
-                settings?.heroMediaType === 'IMAGE'
+                homeData.heroMediaType === 'IMAGE'
                   ? 'bg-blue-600 border-blue-500 text-white shadow-lg'
                   : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
               }`}
@@ -89,9 +120,9 @@ export default function HomeContentAdmin() {
 
             <button
               type="button"
-              onClick={() => setSettings({ ...settings, heroMediaType: 'R2_VIDEO' })}
+              onClick={() => setHomeData({ ...homeData, heroMediaType: 'R2_VIDEO' })}
               className={`p-4 rounded-2xl border flex items-center justify-center gap-3 font-bold text-xs transition-all ${
-                settings?.heroMediaType === 'R2_VIDEO' || settings?.heroMediaType === 'CLOUDINARY_VIDEO'
+                homeData.heroMediaType === 'R2_VIDEO' || homeData.heroMediaType === 'CLOUDINARY_VIDEO'
                   ? 'bg-blue-600 border-blue-500 text-white shadow-lg'
                   : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
               }`}
@@ -102,9 +133,9 @@ export default function HomeContentAdmin() {
 
             <button
               type="button"
-              onClick={() => setSettings({ ...settings, heroMediaType: 'YOUTUBE' })}
+              onClick={() => setHomeData({ ...homeData, heroMediaType: 'YOUTUBE' })}
               className={`p-4 rounded-2xl border flex items-center justify-center gap-3 font-bold text-xs transition-all ${
-                settings?.heroMediaType === 'YOUTUBE'
+                homeData.heroMediaType === 'YOUTUBE'
                   ? 'bg-blue-600 border-blue-500 text-white shadow-lg'
                   : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
               }`}
@@ -117,11 +148,11 @@ export default function HomeContentAdmin() {
 
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1">Hero Headline Line 1</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1">Hero Headline / Tagline</label>
             <input
               type="text"
-              value={settings?.tagline || ''}
-              onChange={(e) => setSettings({ ...settings, tagline: e.target.value })}
+              value={homeData.heroTagline}
+              onChange={(e) => setHomeData({ ...homeData, heroTagline: e.target.value })}
               className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white"
             />
           </div>
@@ -130,8 +161,8 @@ export default function HomeContentAdmin() {
             <label className="block text-xs font-bold text-slate-300 mb-1">Hero Subheadline</label>
             <textarea
               rows="2"
-              value={settings?.subTagline || ''}
-              onChange={(e) => setSettings({ ...settings, subTagline: e.target.value })}
+              value={homeData.heroSubTagline}
+              onChange={(e) => setHomeData({ ...homeData, heroSubTagline: e.target.value })}
               className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white"
             ></textarea>
           </div>
@@ -140,43 +171,58 @@ export default function HomeContentAdmin() {
             mode="image"
             category="Hero"
             label="Hero Background Image"
-            value={settings?.heroImage || ''}
-            onChange={(url) => setSettings({ ...settings, heroImage: url })}
+            value={homeData.heroImage}
+            onChange={(url) => setHomeData({ ...homeData, heroImage: url })}
             theme="dark"
           />
 
-          <MediaUploader
-            mode="image"
-            category="Faculty"
-            label="Leadership / Principal Photo"
-            value={settings?.leadershipPhoto || ''}
-            onChange={(url) => setSettings({ ...settings, leadershipPhoto: url })}
-            theme="dark"
-          />
-
-          {(settings?.heroMediaType === 'R2_VIDEO' || settings?.heroMediaType === 'CLOUDINARY_VIDEO') && (
+          {(homeData.heroMediaType === 'R2_VIDEO' || homeData.heroMediaType === 'CLOUDINARY_VIDEO') && (
             <MediaUploader
               mode="video"
               category="Hero"
               label="Direct MP4 / WebM Hero Video (R2 Storage)"
-              value={settings?.heroVideoUrl || ''}
-              onChange={(url) => setSettings({ ...settings, heroVideoUrl: url })}
+              value={homeData.heroVideoUrl}
+              onChange={(url) => setHomeData({ ...homeData, heroVideoUrl: url })}
               theme="dark"
             />
           )}
 
-          {settings?.heroMediaType === 'YOUTUBE' && (
+          {homeData.heroMediaType === 'YOUTUBE' && (
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1">YouTube Embed URL</label>
               <input
                 type="text"
-                value={settings?.heroYouTubeUrl || ''}
-                onChange={(e) => setSettings({ ...settings, heroYouTubeUrl: e.target.value })}
+                value={homeData.heroYouTubeUrl}
+                onChange={(e) => setHomeData({ ...homeData, heroYouTubeUrl: e.target.value })}
                 placeholder="https://www.youtube.com/embed/..."
                 className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white"
               />
             </div>
           )}
+
+          <div className="pt-4 border-t border-slate-800 space-y-4">
+            <h4 className="text-xs font-extrabold text-amber-400 uppercase tracking-wider">Home Experience Section Copy</h4>
+            
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Experience Heading</label>
+              <input
+                type="text"
+                value={homeData.aboutSectionHeading}
+                onChange={(e) => setHomeData({ ...homeData, aboutSectionHeading: e.target.value })}
+                className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Experience Description / Overview</label>
+              <textarea
+                rows="3"
+                value={homeData.aboutText}
+                onChange={(e) => setHomeData({ ...homeData, aboutText: e.target.value })}
+                className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white"
+              ></textarea>
+            </div>
+          </div>
         </div>
 
         <button
