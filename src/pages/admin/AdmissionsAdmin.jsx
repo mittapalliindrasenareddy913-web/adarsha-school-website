@@ -81,11 +81,15 @@ export default function AdmissionsAdmin() {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this admission enquiry?')) return;
     try {
-      await api.adminDeleteAdmissionEnquiry(id);
-      if (refreshUnread) refreshUnread();
-      loadEnquiries();
+      const res = await api.adminDeleteAdmissionEnquiry(id);
+      if (res.success) {
+        setEnquiries(prev => prev.filter(e => e._id !== id));
+        if (refreshUnread) refreshUnread();
+      } else {
+        alert(res.message || 'Failed to delete enquiry.');
+      }
     } catch (err) {
-      alert('Failed to delete enquiry.');
+      alert(err.message || 'Failed to delete enquiry.');
     }
   };
 

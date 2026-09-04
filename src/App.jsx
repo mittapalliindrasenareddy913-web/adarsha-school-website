@@ -33,6 +33,7 @@ import Login from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import HomeContentAdmin from './pages/admin/HomeContentAdmin';
 import AboutAdmin from './pages/admin/AboutAdmin';
+import LeadershipAdmin from './pages/admin/LeadershipAdmin';
 import AcademicsAdmin from './pages/admin/AcademicsAdmin';
 import FacilitiesAdmin from './pages/admin/FacilitiesAdmin';
 import FacultyAdmin from './pages/admin/FacultyAdmin';
@@ -107,6 +108,7 @@ export default function App() {
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="content/home" element={<HomeContentAdmin />} />
                   <Route path="content/about" element={<AboutAdmin />} />
+                  <Route path="content/leadership" element={<LeadershipAdmin />} />
                   <Route path="content/academics" element={<AcademicsAdmin />} />
                   <Route path="content/facilities" element={<FacilitiesAdmin />} />
                   <Route path="content/faculty" element={<FacultyAdmin />} />

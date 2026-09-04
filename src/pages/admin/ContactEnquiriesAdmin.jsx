@@ -62,11 +62,15 @@ export default function ContactEnquiriesAdmin() {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete message?')) return;
     try {
-      await api.adminDeleteContactEnquiry(id);
-      if (refreshUnread) refreshUnread();
-      loadEnquiries();
+      const res = await api.adminDeleteContactEnquiry(id);
+      if (res.success) {
+        setEnquiries(prev => prev.filter(e => e._id !== id));
+        if (refreshUnread) refreshUnread();
+      } else {
+        alert(res.message || 'Failed to delete message.');
+      }
     } catch (err) {
-      alert('Failed to delete message.');
+      alert(err.message || 'Failed to delete message.');
     }
   };
 

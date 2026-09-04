@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Home,
   BookOpen,
+  UserCheck,
   Building,
   GraduationCap,
   Trophy,
@@ -32,6 +33,7 @@ const sidebarGroups = [
     items: [
       { name: "Home Content", path: "/admin/content/home", icon: Home },
       { name: "About School", path: "/admin/content/about", icon: BookOpen },
+      { name: "Leadership Desk", path: "/admin/content/leadership", icon: UserCheck },
       { name: "Academics", path: "/admin/content/academics", icon: GraduationCap },
       { name: "Facilities", path: "/admin/content/facilities", icon: Building },
       { name: "Faculty", path: "/admin/content/faculty", icon: GraduationCap },

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Upload, Image, Video, FileText, Loader2, X, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
 import { api } from '../services/api';
+import ImageCropModal from './ImageCropModal';
 
 export default function MediaUploader({
   value,
@@ -9,11 +10,14 @@ export default function MediaUploader({
   category = 'General',
   label = '',
   theme = 'dark',
-  compact = false
+  compact = false,
+  enableCrop = false,
+  aspectRatio = 4 / 5
 }) {
   const [uploading, setUploading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [pendingCropFile, setPendingCropFile] = useState(null);
   const fileInputRef = useRef(null);
 
   const isDark = theme === 'dark';
@@ -32,6 +36,35 @@ export default function MediaUploader({
 
   const defaultLabel = label || (mode === 'video' ? 'Upload Video' : mode === 'document' ? 'Upload Document' : 'Upload Photo');
 
+  const uploadFileToR2 = async (fileToUpload) => {
+    setErrorMsg('');
+    setUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', fileToUpload);
+      formData.append('title', fileToUpload.name);
+      formData.append('category', category);
+
+      const res = await api.adminUploadMedia(formData);
+
+      if (res.success && res.data?.url) {
+        onChange(res.data.url, res.data);
+      } else {
+        setErrorMsg(res.message || 'Upload failed.');
+      }
+    } catch (err) {
+      console.error('MediaUploader Error:', err);
+      setErrorMsg(err.message || 'Error uploading file to storage server.');
+    } finally {
+      setUploading(false);
+      setPendingCropFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   const handleFile = async (file) => {
     if (!file) return;
 
@@ -48,31 +81,13 @@ export default function MediaUploader({
       return;
     }
 
-    setErrorMsg('');
-    setUploading(true);
-
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('title', file.name);
-      formData.append('category', category);
-
-      const res = await api.adminUploadMedia(formData);
-
-      if (res.success && res.data?.url) {
-        onChange(res.data.url, res.data);
-      } else {
-        setErrorMsg(res.message || 'Upload failed.');
-      }
-    } catch (err) {
-      console.error('MediaUploader Error:', err);
-      setErrorMsg(err.message || 'Error uploading file to storage server.');
-    } finally {
-      setUploading(false);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+    // If cropping is enabled for images, launch crop editor modal first
+    if (enableCrop && mode === 'image') {
+      setPendingCropFile(file);
+      return;
     }
+
+    await uploadFileToR2(file);
   };
 
   const handleDrag = (e) => {
@@ -235,6 +250,15 @@ export default function MediaUploader({
             </div>
           )}
         </div>
+      )}
+
+      {pendingCropFile && (
+        <ImageCropModal
+          imageFile={pendingCropFile}
+          aspectRatio={aspectRatio}
+          onCropComplete={(croppedFile) => uploadFileToR2(croppedFile)}
+          onCancel={() => setPendingCropFile(null)}
+        />
       )}
     </div>
   );

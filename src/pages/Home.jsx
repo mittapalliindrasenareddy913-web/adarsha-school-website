@@ -328,71 +328,126 @@ export default function Home() {
           3. ABOUT ADARSHA & PRINCIPAL DESK
          ================================================== */}
       <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Left: Principal / Leadership Photo */}
-          <div className="lg:col-span-6">
-            <div className="relative rounded-lg overflow-hidden border border-slate-200 bg-white p-2 shadow-xs">
-              {displaySite?.leadershipPhoto || siteData?.leadershipPhoto || displaySite?.aboutImage ? (
-                <div className="relative rounded-lg overflow-hidden group">
-                  <img
-                    src={displaySite?.leadershipPhoto || siteData?.leadershipPhoto || displaySite?.aboutImage}
-                    alt="Principal / Leadership Desk - Adarsha E.M. School"
-                    className="w-full h-[340px] sm:h-[400px] object-cover rounded-lg"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/85 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-amber-500/30 inline-block mb-1">
-                      LEADERSHIP DESK
-                    </span>
-                    <h4 className="text-sm font-extrabold text-white">Correspondent / Principal Desk</h4>
-                    <p className="text-[11px] text-slate-300">Adarsha High School, Thamballapalle</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="w-full h-[340px] sm:h-[400px] rounded-lg bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-slate-900 flex flex-col items-center justify-center p-8 text-center text-white space-y-4 border border-slate-700">
-                  <div className="w-16 h-16 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-inner">
-                    <GraduationCap className="w-8 h-8" />
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="text-lg font-black tracking-wide text-white uppercase">PRINCIPAL / LEADERSHIP PHOTO</h4>
-                    <p className="text-xs text-slate-300">Adarsha High School, Thamballapalle</p>
-                  </div>
-                  <span className="text-[10px] font-semibold text-amber-400/80 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
-                    Principal photo can be uploaded via Admin CMS
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Right: Content */}
-          <div className="lg:col-span-6 space-y-5">
-            <div>
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#D97706] block mb-1">
-                ABOUT ADARSHA
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-[#0B192C] leading-tight">
-                Building Strong Foundations for a Brighter Future
-              </h2>
-            </div>
-
-            <p className="text-slate-700 text-xs sm:text-sm leading-relaxed">
-              {displaySite?.aboutText || "Adarsha High School in Thamballapalle is dedicated to empowering young learners through academic excellence, structured discipline, and strong moral values."}
+        <div className="space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#D97706] block">
+              LEADERSHIP DESK
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-[#0B192C] leading-tight">
+              Guided by Experienced Educational Leadership
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
+              Dedicated leadership nurturing academic rigor, character development, and holistic student growth.
             </p>
-
-            <div className="pt-2">
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-2 py-3 px-6 rounded-lg font-bold text-xs bg-[#0B192C] hover:bg-[#1E3E62] text-white shadow-xs transition-all"
-              >
-                <span>DISCOVER OUR SCHOOL</span>
-                <ArrowRight className="w-4 h-4 text-amber-400" />
-              </Link>
-            </div>
-
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+            {/* 1. CORRESPONDENT PROFILE */}
+            {(displaySite?.leadership?.correspondent?.enabled ?? true) && (() => {
+              const corr = displaySite?.leadership?.correspondent || {};
+              const photo = corr.photo || displaySite?.leadershipPhoto || siteData?.leadershipPhoto;
+              return (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 space-y-4">
+                  <div className="space-y-4">
+                    <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
+                      {photo ? (
+                        <img
+                          src={photo}
+                          alt={corr.name || "Correspondent"}
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-slate-900 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
+                          <GraduationCap className="w-12 h-12 text-amber-400 opacity-80" />
+                          <h4 className="text-base font-extrabold tracking-wide uppercase">CORRESPONDENT PHOTO</h4>
+                          <span className="text-[10px] text-amber-400/80 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+                            Photo can be uploaded via Admin CMS
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-amber-500/30 inline-block mb-1">
+                          CORRESPONDENT
+                        </span>
+                        <h4 className="text-base font-extrabold text-white">{corr.name || "Correspondent Desk"}</h4>
+                        <p className="text-xs text-slate-300">{corr.designation || "Correspondent"}</p>
+                      </div>
+                    </div>
+
+                    {corr.quote && (
+                      <p className="text-xs italic font-semibold text-amber-800 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                        "{corr.quote}"
+                      </p>
+                    )}
+
+                    {corr.message && (
+                      <p className="text-xs text-slate-700 leading-relaxed font-normal">
+                        {corr.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>Adarsha High School, Thamballapalle</span>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* 2. PRINCIPAL PROFILE */}
+            {(displaySite?.leadership?.principal?.enabled ?? true) && (() => {
+              const prin = displaySite?.leadership?.principal || {};
+              const photo = prin.photo;
+              return (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 space-y-4">
+                  <div className="space-y-4">
+                    <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
+                      {photo ? (
+                        <img
+                          src={photo}
+                          alt={prin.name || "Principal"}
+                          className="w-full h-full object-cover rounded-xl"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-slate-900 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
+                          <GraduationCap className="w-12 h-12 text-amber-400 opacity-80" />
+                          <h4 className="text-base font-extrabold tracking-wide uppercase">PRINCIPAL PHOTO</h4>
+                          <span className="text-[10px] text-amber-400/80 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+                            Photo can be uploaded via Admin CMS
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
+                        <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-amber-500/30 inline-block mb-1">
+                          PRINCIPAL
+                        </span>
+                        <h4 className="text-base font-extrabold text-white">{prin.name || "Principal Desk"}</h4>
+                        <p className="text-xs text-slate-300">{prin.designation || "Principal"}</p>
+                      </div>
+                    </div>
+
+                    {prin.quote && (
+                      <p className="text-xs italic font-semibold text-amber-800 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                        "{prin.quote}"
+                      </p>
+                    )}
+
+                    {prin.message && (
+                      <p className="text-xs text-slate-700 leading-relaxed font-normal">
+                        {prin.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>Adarsha High School, Thamballapalle</span>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
         </div>
       </section>
 

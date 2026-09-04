@@ -36,73 +36,127 @@ export default function About() {
       />
 
       {/* Leadership Desk Message */}
-      <section id="leadership" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-lg overflow-hidden shadow-md border border-slate-200 bg-white p-2">
-              {siteData?.leadershipPhoto ? (
-                <img
-                  src={siteData.leadershipPhoto}
-                  alt="Leadership Desk"
-                  className="w-full h-[280px] sm:h-[420px] object-cover rounded-lg"
-                />
-              ) : (
-                <div className="w-full h-[280px] sm:h-[420px] rounded-lg bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-inner">
-                    <Award className="w-8 h-8" />
+      <section id="leadership" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28 space-y-12">
+        <SectionHeading
+          badge="LEADERSHIP DESK"
+          title="Guiding Young Minds Towards Excellence"
+          subtitle="Education is not merely the accumulation of facts, but the training of the mind to think and character to lead."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          {/* 1. CORRESPONDENT PROFILE */}
+          {(siteData?.leadership?.correspondent?.enabled ?? true) && (() => {
+            const corr = siteData?.leadership?.correspondent || {};
+            const photo = corr.photo || siteData?.leadershipPhoto;
+            return (
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
+                <div className="space-y-4">
+                  <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
+                    {photo ? (
+                      <img
+                        src={photo}
+                        alt={corr.name || "Correspondent"}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
+                        <Award className="w-12 h-12 text-emerald-400 opacity-80" />
+                        <h4 className="text-base font-extrabold tracking-wide uppercase">CORRESPONDENT PHOTO</h4>
+                        <span className="text-[10px] text-emerald-400/80 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
+                          Photo can be uploaded via Admin CMS
+                        </span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-emerald-500/30 inline-block mb-1">
+                        CORRESPONDENT
+                      </span>
+                      <h4 className="text-lg font-extrabold text-white">{corr.name || "Correspondent Desk"}</h4>
+                      <p className="text-xs text-slate-300">{corr.designation || "Correspondent"}</p>
+                    </div>
                   </div>
-                  <h4 className="text-lg font-bold">Correspondent / Principal Desk</h4>
-                  <p className="text-xs text-slate-300">Adarsha High School, Thamballapalle</p>
+
+                  {corr.quote && (
+                    <p className="text-xs italic font-semibold text-emerald-900 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                      "{corr.quote}"
+                    </p>
+                  )}
+
+                  {corr.message ? (
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                      {corr.message}
+                    </p>
+                  ) : (
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      Welcome to Adarsha High School. Our mission is to nurture confident, ethically grounded, and intellectually curious young minds in a supportive learning environment.
+                    </p>
+                  )}
                 </div>
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
-              
-              <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
-                <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-1">
-                  Leadership Message
-                </span>
-                <h4 className="text-xl font-extrabold">Correspondent / Principal Desk</h4>
-                <p className="text-xs text-slate-300">Adarsha High School, Thamballapalle</p>
-              </div>
-            </div>
-          </div>
 
-          <div className="lg:col-span-7 space-y-6">
-            <SectionHeading
-              align="left"
-              badge="LEADERSHIP VISION"
-              title="Guiding Young Minds Towards Excellence"
-              subtitle="Education is not merely the accumulation of facts, but the training of the mind to think and character to lead."
-            />
-
-            <p className="text-slate-700 text-base leading-relaxed">
-              Welcome to Adarsha E.M. School. Our mission is to nurture confident, ethically grounded, and intellectually curious young minds. We provide a safe, supportive environment where academic rigor meets joyful discovery.
-            </p>
-
-            <p className="text-slate-700 text-base leading-relaxed">
-              Our dedicated teaching faculty encourages every child to explore their unique talents, develop problem-solving skills, and practice discipline and empathy in daily campus life.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="p-4 rounded-lg bg-white border border-slate-200 border-l-4 border-l-emerald-600 shadow-xs flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-sm font-bold text-[#0B192C]">Safe Campus</h4>
-                  <p className="text-xs text-slate-500">24/7 security & staff guidance</p>
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                  <span>Adarsha High School, Thamballapalle</span>
                 </div>
               </div>
+            );
+          })()}
 
-              <div className="p-4 rounded-lg bg-white border border-slate-200 border-l-4 border-l-teal-600 shadow-xs flex items-start gap-3">
-                <Award className="w-5 h-5 text-teal-600 shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-sm font-bold text-[#0B192C]">Academic Rigor</h4>
-                  <p className="text-xs text-slate-500">Structured English curriculum</p>
+          {/* 2. PRINCIPAL PROFILE */}
+          {(siteData?.leadership?.principal?.enabled ?? true) && (() => {
+            const prin = siteData?.leadership?.principal || {};
+            const photo = prin.photo;
+            return (
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
+                <div className="space-y-4">
+                  <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
+                    {photo ? (
+                      <img
+                        src={photo}
+                        alt={prin.name || "Principal"}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
+                        <Award className="w-12 h-12 text-emerald-400 opacity-80" />
+                        <h4 className="text-base font-extrabold tracking-wide uppercase">PRINCIPAL PHOTO</h4>
+                        <span className="text-[10px] text-emerald-400/80 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
+                          Photo can be uploaded via Admin CMS
+                        </span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-emerald-500/30 inline-block mb-1">
+                        PRINCIPAL
+                      </span>
+                      <h4 className="text-lg font-extrabold text-white">{prin.name || "Principal Desk"}</h4>
+                      <p className="text-xs text-slate-300">{prin.designation || "Principal"}</p>
+                    </div>
+                  </div>
+
+                  {prin.quote && (
+                    <p className="text-xs italic font-semibold text-emerald-900 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                      "{prin.quote}"
+                    </p>
+                  )}
+
+                  {prin.message ? (
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                      {prin.message}
+                    </p>
+                  ) : (
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      Our dedicated teaching faculty encourages every student to explore their unique strengths, master academic fundamentals, and practice discipline and empathy daily.
+                    </p>
+                  )}
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                  <span>Adarsha High School, Thamballapalle</span>
                 </div>
               </div>
-            </div>
-          </div>
-
+            );
+          })()}
         </div>
       </section>
 
