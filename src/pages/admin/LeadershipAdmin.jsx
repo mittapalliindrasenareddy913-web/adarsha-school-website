@@ -11,7 +11,7 @@ export default function LeadershipAdmin() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
-  const [activeTab, setActiveTab] = useState('correspondent'); // 'correspondent' | 'principal'
+  const [activeTab, setActiveTab] = useState('director'); // 'director' | 'principal'
 
   useEffect(() => {
     async function loadData() {
@@ -24,7 +24,7 @@ export default function LeadershipAdmin() {
             d.leadership = {
               correspondent: {
                 name: '',
-                designation: 'Correspondent',
+                designation: 'Director',
                 photo: d.leadershipPhoto || '',
                 message: '',
                 quote: '',
@@ -41,7 +41,9 @@ export default function LeadershipAdmin() {
             };
           } else {
             if (!d.leadership.correspondent) {
-              d.leadership.correspondent = { name: '', designation: 'Correspondent', photo: d.leadershipPhoto || '', message: '', quote: '', enabled: true };
+              d.leadership.correspondent = { name: '', designation: 'Director', photo: d.leadershipPhoto || '', message: '', quote: '', enabled: true };
+            } else if (!d.leadership.correspondent.designation || d.leadership.correspondent.designation === 'Correspondent') {
+              d.leadership.correspondent.designation = 'Director';
             }
             if (!d.leadership.principal) {
               d.leadership.principal = { name: '', designation: 'Principal', photo: '', message: '', quote: '', enabled: true };
@@ -94,7 +96,7 @@ export default function LeadershipAdmin() {
 
   if (loading) return <div className="p-8 text-amber-400 font-bold text-sm">Loading Leadership Profiles...</div>;
 
-  const correspondent = settings?.leadership?.correspondent || {};
+  const director = settings?.leadership?.correspondent || {};
   const principal = settings?.leadership?.principal || {};
 
   return (
@@ -104,7 +106,7 @@ export default function LeadershipAdmin() {
       <div>
         <h1 className="text-2xl font-extrabold text-[#4a3e3d] tracking-tight">Leadership Desk Manager</h1>
         <p className="text-xs font-semibold text-[#6e5d5c]">
-          Manage separate Correspondent and Principal profiles, photos with built-in Crop Editor, biographies, and quotes.
+          Manage separate Director and Principal profiles, photos with built-in Crop Editor, biographies, and quotes.
         </p>
       </div>
 
@@ -120,19 +122,19 @@ export default function LeadershipAdmin() {
         </div>
       )}
 
-      {/* Tabs for Correspondent & Principal */}
+      {/* Tabs for Director & Principal */}
       <div className="flex items-center gap-3 border-b border-slate-800 pb-2">
         <button
           type="button"
-          onClick={() => setActiveTab('correspondent')}
+          onClick={() => setActiveTab('director')}
           className={`px-5 py-2.5 rounded-xl font-extrabold text-xs transition-all flex items-center gap-2 ${
-            activeTab === 'correspondent'
+            activeTab === 'director'
               ? 'bg-amber-400 text-slate-950 shadow-md'
               : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
           }`}
         >
           <UserCheck className="w-4 h-4" />
-          <span>Correspondent Profile</span>
+          <span>Director Profile</span>
         </button>
 
         <button
@@ -151,32 +153,32 @@ export default function LeadershipAdmin() {
 
       <form onSubmit={handleSubmit} className="space-y-6 bg-slate-900 p-8 rounded-3xl border border-slate-800 text-xs">
         
-        {/* CORRESPONDENT SECTION */}
-        {activeTab === 'correspondent' && (
+        {/* DIRECTOR SECTION */}
+        {activeTab === 'director' && (
           <div className="space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <h3 className="text-sm font-black text-amber-400 uppercase tracking-widest flex items-center gap-2">
                 <UserCheck className="w-4 h-4 text-amber-400" />
-                <span>Correspondent Information</span>
+                <span>Director Information</span>
               </h3>
 
               <label className="inline-flex items-center gap-2 cursor-pointer text-slate-300 font-bold">
                 <input
                   type="checkbox"
-                  checked={correspondent.enabled ?? true}
+                  checked={director.enabled ?? true}
                   onChange={(e) => handleProfileChange('correspondent', 'enabled', e.target.checked)}
                   className="w-4 h-4 accent-amber-400 rounded cursor-pointer"
                 />
-                <span>Display Correspondent Profile on Website</span>
+                <span>Display Director Profile on Website</span>
               </label>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-slate-300 mb-1">Correspondent Full Name</label>
+                <label className="block font-bold text-slate-300 mb-1">Director Full Name</label>
                 <input
                   type="text"
-                  value={correspondent.name || ''}
+                  value={director.name || ''}
                   onChange={(e) => handleProfileChange('correspondent', 'name', e.target.value)}
                   placeholder="e.g. Sri. M. Indrasena Reddy"
                   className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm"
@@ -187,9 +189,9 @@ export default function LeadershipAdmin() {
                 <label className="block font-bold text-slate-300 mb-1">Designation Label</label>
                 <input
                   type="text"
-                  value={correspondent.designation || 'Correspondent'}
+                  value={director.designation || 'Director'}
                   onChange={(e) => handleProfileChange('correspondent', 'designation', e.target.value)}
-                  placeholder="e.g. Founder & Correspondent"
+                  placeholder="e.g. Founder & Director"
                   className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm"
                 />
               </div>
@@ -197,13 +199,13 @@ export default function LeadershipAdmin() {
 
             <div className="space-y-2">
               <label className="block font-bold text-slate-300">
-                Correspondent Profile Photo (Includes Crop Editor)
+                Director Profile Photo (Includes Crop Editor)
               </label>
               <MediaUploader
                 mode="image"
                 category="Faculty"
-                label="Upload Correspondent Photo (Crop Enabled)"
-                value={correspondent.photo || ''}
+                label="Upload Director Photo (Crop Enabled)"
+                value={director.photo || ''}
                 onChange={(url) => handleProfileChange('correspondent', 'photo', url)}
                 enableCrop={true}
                 aspectRatio={4 / 5}
@@ -218,7 +220,7 @@ export default function LeadershipAdmin() {
               <label className="block font-bold text-slate-300 mb-1">Highlight Quote (Optional)</label>
               <input
                 type="text"
-                value={correspondent.quote || ''}
+                value={director.quote || ''}
                 onChange={(e) => handleProfileChange('correspondent', 'quote', e.target.value)}
                 placeholder="e.g. Empowering students through ethical leadership and modern education."
                 className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm"
@@ -226,12 +228,12 @@ export default function LeadershipAdmin() {
             </div>
 
             <div>
-              <label className="block font-bold text-slate-300 mb-1">Correspondent Message / Biography</label>
+              <label className="block font-bold text-slate-300 mb-1">Director Message / Biography</label>
               <textarea
                 rows="5"
-                value={correspondent.message || ''}
+                value={director.message || ''}
                 onChange={(e) => handleProfileChange('correspondent', 'message', e.target.value)}
-                placeholder="Write the Correspondent's message to parents and students..."
+                placeholder="Write the Director's message to parents and students..."
                 className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm"
               ></textarea>
             </div>
@@ -265,7 +267,7 @@ export default function LeadershipAdmin() {
                   type="text"
                   value={principal.name || ''}
                   onChange={(e) => handleProfileChange('principal', 'name', e.target.value)}
-                  placeholder="e.g. Smt. K. Anitha, M.A., B.Ed."
+                  placeholder="e.g. Smt. K. Lalitha"
                   className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm"
                 />
               </div>
@@ -276,7 +278,7 @@ export default function LeadershipAdmin() {
                   type="text"
                   value={principal.designation || 'Principal'}
                   onChange={(e) => handleProfileChange('principal', 'designation', e.target.value)}
-                  placeholder="e.g. Principal / Headmistress"
+                  placeholder="e.g. Principal"
                   className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm"
                 />
               </div>
@@ -307,7 +309,7 @@ export default function LeadershipAdmin() {
                 type="text"
                 value={principal.quote || ''}
                 onChange={(e) => handleProfileChange('principal', 'quote', e.target.value)}
-                placeholder="e.g. Education is the training of the mind to think and character to lead."
+                placeholder="e.g. Dedication to conceptual clarity and student well-being."
                 className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-sm"
               />
             </div>
@@ -325,15 +327,13 @@ export default function LeadershipAdmin() {
           </div>
         )}
 
-        {/* Submit Button */}
         <div className="pt-4 border-t border-slate-800 flex justify-end">
           <button
             type="submit"
             disabled={saving}
-            className="px-8 py-3.5 rounded-2xl font-extrabold text-xs bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-xl flex items-center gap-2 transition-all"
+            className="px-8 py-4 rounded-2xl font-bold text-xs bg-amber-400 hover:bg-amber-500 text-slate-950 flex items-center gap-2 shadow-xl"
           >
-            <Save className="w-4 h-4" />
-            <span>{saving ? 'SAVING LEADERSHIP PROFILES...' : 'SAVE LEADERSHIP PROFILES'}</span>
+            {saving ? <span>Saving Changes...</span> : <><Save className="w-4 h-4" /><span>SAVE LEADERSHIP PROFILES</span></>}
           </button>
         </div>
 

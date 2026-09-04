@@ -238,7 +238,7 @@ export default function Navbar() {
                       className="block px-3 py-2 rounded-lg text-xs font-bold text-slate-800 hover:bg-slate-100 hover:text-[#0B192C] transition-colors"
                     >
                       <div className="font-extrabold">Leadership & Management</div>
-                      <div className="text-[10px] text-slate-500 font-normal">Correspondent & Principal desk</div>
+                      <div className="text-[10px] text-slate-500 font-normal">Director & Principal desk</div>
                     </Link>
                     <Link
                       to="/about#vision"

@@ -56,7 +56,7 @@ export default function About() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {/* CORRESPONDENT PROFILE */}
+          {/* DIRECTOR PROFILE */}
           {(siteData?.leadership?.correspondent?.enabled ?? true) && (() => {
             const corr = siteData?.leadership?.correspondent || {};
             const photo = corr.photo || siteData?.leadershipPhoto;
@@ -67,13 +67,13 @@ export default function About() {
                     {photo ? (
                       <img
                         src={photo}
-                        alt={corr.name || "Correspondent"}
+                        alt={corr.name || "Director"}
                         className="w-full h-full object-cover rounded-xl"
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
                         <Award className="w-12 h-12 text-emerald-400 opacity-80" />
-                        <h4 className="text-base font-extrabold tracking-wide uppercase">CORRESPONDENT PHOTO</h4>
+                        <h4 className="text-base font-extrabold tracking-wide uppercase">DIRECTOR PHOTO</h4>
                         <span className="text-[10px] text-emerald-400/80 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
                           Photo can be uploaded via Admin CMS
                         </span>
@@ -82,10 +82,10 @@ export default function About() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
                     <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
                       <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-emerald-500/30 inline-block mb-1">
-                        CORRESPONDENT
+                        DIRECTOR
                       </span>
-                      <h4 className="text-lg font-extrabold text-white">{corr.name || "Correspondent Desk"}</h4>
-                      <p className="text-xs text-slate-300">{corr.designation || "Correspondent"}</p>
+                      <h4 className="text-lg font-extrabold text-white">{corr.name || "Director Desk"}</h4>
+                      <p className="text-xs text-slate-300">{corr.designation && corr.designation !== 'Correspondent' ? corr.designation : "Director"}</p>
                     </div>
                   </div>
 

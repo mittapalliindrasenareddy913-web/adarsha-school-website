@@ -84,6 +84,10 @@ export default function Home() {
 
   // Dynamic Content Collections with Fallbacks
   const displaySite = siteData || siteContent;
+
+  const heroTagline = displaySite?.home?.heroTagline || displaySite?.tagline || "Shaping Curious Minds. Building Confident Futures.";
+  const heroSubTagline = displaySite?.home?.heroSubTagline || displaySite?.subTagline || "An environment where young minds learn, explore, create, and prepare for tomorrow with quality education in Thamballapalle.";
+
   const displayStats = (siteData?.stats?.length ? siteData.stats : siteContent.stats) || [];
   const displayAcademics = (academics?.levels?.length ? academics.levels : (Array.isArray(academics) && academics.length ? academics : academicsData.levels)) || [];
   const displayFacilities = (facilities?.length ? facilities : facilitiesData) || [];
@@ -224,12 +228,12 @@ export default function Home() {
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white font-sans drop-shadow-md">
-              {displaySite?.home?.heroTagline || displaySite?.tagline || "Shaping Curious Minds. Building Confident Futures."}
+              {heroTagline}
             </h1>
 
             {/* Supporting Text */}
             <p className="text-slate-200 text-sm sm:text-base font-medium leading-relaxed max-w-xl drop-shadow-xs">
-              {displaySite?.home?.heroSubTagline || displaySite?.subTagline || "An environment where young minds learn, explore, create, and prepare for tomorrow with quality education in Thamballapalle."}
+              {heroSubTagline}
             </p>
 
             {/* Action Buttons */}
@@ -253,12 +257,14 @@ export default function Home() {
 
           </div>
 
-          {/* MOBILE HERO CONTENT (Clean floating content over photo - UNTOUCHED) */}
-          <div className="sm:hidden text-center space-y-5 pb-4 pt-4 px-2 w-full mx-auto">
-            <h1 className="text-2xl font-black tracking-tight leading-snug text-white font-sans drop-shadow-md">
-              Shaping Curious Minds. <br />
-              <span>Building Confident Futures.</span>
+          {/* MOBILE HERO CONTENT */}
+          <div className="sm:hidden text-center space-y-4 pb-4 pt-4 px-2 w-full mx-auto">
+            <h1 className="text-xl font-black tracking-tight leading-snug text-white font-sans drop-shadow-md">
+              {heroTagline}
             </h1>
+            <p className="text-xs text-slate-200 font-medium leading-relaxed max-w-xs mx-auto drop-shadow-xs">
+              {heroSubTagline}
+            </p>
 
             <div className="flex flex-col gap-3 pt-1 max-w-xs mx-auto">
               <Link
@@ -341,7 +347,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {/* 1. CORRESPONDENT PROFILE */}
+            {/* 1. DIRECTOR PROFILE */}
             {(displaySite?.leadership?.correspondent?.enabled ?? true) && (() => {
               const corr = displaySite?.leadership?.correspondent || {};
               const photo = corr.photo || displaySite?.leadershipPhoto || siteData?.leadershipPhoto;
@@ -352,13 +358,13 @@ export default function Home() {
                       {photo ? (
                         <img
                           src={photo}
-                          alt={corr.name || "Correspondent"}
+                          alt={corr.name || "Director"}
                           className="w-full h-full object-cover rounded-xl"
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-slate-900 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
                           <GraduationCap className="w-12 h-12 text-amber-400 opacity-80" />
-                          <h4 className="text-base font-extrabold tracking-wide uppercase">CORRESPONDENT PHOTO</h4>
+                          <h4 className="text-base font-extrabold tracking-wide uppercase">DIRECTOR PHOTO</h4>
                           <span className="text-[10px] text-amber-400/80 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
                             Photo can be uploaded via Admin CMS
                           </span>
@@ -367,10 +373,10 @@ export default function Home() {
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
                       <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
                         <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-amber-500/30 inline-block mb-1">
-                          CORRESPONDENT
+                          DIRECTOR
                         </span>
-                        <h4 className="text-base font-extrabold text-white">{corr.name || "Correspondent Desk"}</h4>
-                        <p className="text-xs text-slate-300">{corr.designation || "Correspondent"}</p>
+                        <h4 className="text-base font-extrabold text-white">{corr.name || "Director Desk"}</h4>
+                        <p className="text-xs text-slate-300">{corr.designation && corr.designation !== 'Correspondent' ? corr.designation : "Director"}</p>
                       </div>
                     </div>
 
