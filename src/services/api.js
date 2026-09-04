@@ -1,7 +1,23 @@
 // Production REST API Service Layer for Adarsha E.M. School
 // Connects React Public Website and Admin CMS directly to the Node.js + Express + MongoDB Backend.
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const getApiBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  const isProductionHost = typeof window !== 'undefined' && 
+    window.location.hostname !== 'localhost' && 
+    window.location.hostname !== '127.0.0.1';
+
+  if (isProductionHost) {
+    if (envUrl && !envUrl.includes('localhost') && !envUrl.includes('127.0.0.1')) {
+      return envUrl;
+    }
+    return 'https://adarsha-school-website-backend.onrender.com/api';
+  }
+
+  return envUrl || 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 async function fetchAPI(endpoint, options = {}) {
   const defaultOptions = {
@@ -14,19 +30,29 @@ async function fetchAPI(endpoint, options = {}) {
     options.body = JSON.stringify(options.body);
   }
 
+  const timeoutMs = options.timeout || (endpoint.includes('/upload') ? 60000 : 30000);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
   let response;
   try {
     response = await fetch(`${API_BASE_URL}${endpoint}`, {
       ...defaultOptions,
       ...options,
+      signal: controller.signal,
       headers: {
         ...defaultOptions.headers,
         ...options.headers
       }
     });
   } catch (netErr) {
+    if (netErr.name === 'AbortError') {
+      throw new Error(`Upload request timed out after ${timeoutMs / 1000} seconds. Please try again with a smaller file.`);
+    }
     console.error(`[API Fetch Error on ${endpoint}]`, netErr);
     throw new Error(`Unable to connect to backend server at ${API_BASE_URL}. Please ensure the Node.js backend server is running.`);
+  } finally {
+    clearTimeout(timeoutId);
   }
 
   let data;

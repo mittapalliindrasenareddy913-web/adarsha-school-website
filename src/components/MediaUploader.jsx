@@ -35,8 +35,11 @@ export default function MediaUploader({
   const handleFile = async (file) => {
     if (!file) return;
 
-    if (!allowedTypes.includes(file.mimetype || file.type)) {
-      setErrorMsg(`Invalid file type (${file.type}). Allowed: ${mode === 'video' ? 'MP4, WebM' : 'JPG, PNG, WEBP, GIF'}`);
+    const rawType = (file.type || file.mimetype || '').toLowerCase();
+    const isTypeValid = allowedTypes.some(t => t.toLowerCase() === rawType || rawType.includes(t.split('/')[1]));
+
+    if (!isTypeValid && rawType) {
+      setErrorMsg(`Invalid file format (${rawType}). Allowed: ${mode === 'video' ? 'MP4, WebM' : mode === 'document' ? 'PDF' : 'JPG, PNG, WEBP, GIF'}`);
       return;
     }
 
