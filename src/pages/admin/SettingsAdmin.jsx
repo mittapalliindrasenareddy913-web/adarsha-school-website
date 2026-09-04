@@ -126,6 +126,30 @@ export default function SettingsAdmin() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
+              <label className="block font-bold text-amber-300 mb-1">Primary Phone Number (Header & Footer)</label>
+              <input
+                type="text"
+                value={settings?.contact?.phonePrimary || ''}
+                onChange={(e) => setSettings({ ...settings, contact: { ...settings.contact, phonePrimary: e.target.value } })}
+                placeholder="e.g. +91 8222844480"
+                className="w-full px-3 py-2 bg-slate-950 border border-amber-500/50 rounded-xl text-white font-bold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-slate-300 mb-1">Secondary Phone Number (Optional)</label>
+              <input
+                type="text"
+                value={settings?.contact?.phoneSecondary || ''}
+                onChange={(e) => setSettings({ ...settings, contact: { ...settings.contact, phoneSecondary: e.target.value } })}
+                placeholder="Leave blank if only 1 phone number"
+                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
               <label className="block font-bold text-slate-300 mb-1">Official Email</label>
               <input
                 type="email"
@@ -136,7 +160,7 @@ export default function SettingsAdmin() {
             </div>
 
             <div>
-              <label className="block font-bold text-slate-300 mb-1">WhatsApp Helpline</label>
+              <label className="block font-bold text-slate-300 mb-1">WhatsApp Helpline Number</label>
               <input
                 type="text"
                 value={settings?.contact?.whatsappNumber || ''}
@@ -146,14 +170,27 @@ export default function SettingsAdmin() {
             </div>
           </div>
 
-          <div>
-            <label className="block font-bold text-slate-300 mb-1">Campus Address</label>
-            <input
-              type="text"
-              value={settings?.location?.address || ''}
-              onChange={(e) => setSettings({ ...settings, location: { ...settings.location, address: e.target.value } })}
-              className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-bold text-slate-300 mb-1">Campus Address</label>
+              <input
+                type="text"
+                value={settings?.location?.address || ''}
+                onChange={(e) => setSettings({ ...settings, location: { ...settings.location, address: e.target.value } })}
+                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white"
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-slate-300 mb-1">Working Hours</label>
+              <input
+                type="text"
+                value={settings?.contact?.workingHours || ''}
+                onChange={(e) => setSettings({ ...settings, contact: { ...settings.contact, workingHours: e.target.value } })}
+                placeholder="e.g. Monday to Saturday: 8:30 AM – 4:30 PM"
+                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white"
+              />
+            </div>
           </div>
 
           <div>

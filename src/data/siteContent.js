@@ -42,7 +42,7 @@ export const siteContent = {
 
   contact: {
     phonePrimary: "+91 98765 43210",
-    phoneSecondary: "+91 87654 32109",
+    phoneSecondary: "",
     whatsappNumber: "919876543210",
     email: "info@adarshaemschool.edu.in",
     admissionsEmail: "admissions@adarshaemschool.edu.in",

@@ -20,7 +20,7 @@ export const schoolData = {
 
   contact: {
     phonePrimary: "+91 98765 43210", // Demo phone number
-    phoneSecondary: "+91 87654 32109",
+    phoneSecondary: "",
     whatsappNumber: "919876543210",
     email: "info@adarshaemschool.edu.in", // Demo email
     admissionsEmail: "admissions@adarshaemschool.edu.in",
