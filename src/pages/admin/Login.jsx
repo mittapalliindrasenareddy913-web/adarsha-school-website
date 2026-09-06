@@ -36,7 +36,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[#faf8f5] text-slate-800 flex items-center justify-center p-4 font-sans">
-      <SEO title="Admin Login | Adarsha E.M. School CMS" />
+      <SEO title="Admin Login | Adarsha High School CMS" />
 
       <div className="w-full max-w-md bg-white border border-amber-200/80 rounded-3xl p-8 shadow-xl space-y-6">
         

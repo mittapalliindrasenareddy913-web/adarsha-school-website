@@ -16,8 +16,8 @@ export default function ThemeExplorer() {
   return (
     <div className="min-h-screen bg-[#faf8f5] text-slate-900 font-sans pt-28 pb-20 px-4 sm:px-6 lg:px-8">
       <SEO
-        title="10 Natural School Themes | Adarsha E.M. School"
-        description="Visual Theme Exploration — Compare 10 Natural, Light, Warm, Human-Friendly Color Systems for Adarsha E.M. School."
+        title="10 Natural School Themes | Adarsha High School"
+        description="Visual Theme Exploration — Compare 10 Natural, Light, Warm, Human-Friendly Color Systems for Adarsha High School."
       />
 
       <div className="max-w-7xl mx-auto space-y-12">
@@ -34,7 +34,7 @@ export default function ThemeExplorer() {
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            Designed for an authentic Indian school experience — airy, warm, friendly, and student-focused. Every theme keeps 100% of Adarsha E.M. School's content, pages, and functionality intact.
+            Designed for an authentic Indian school experience — airy, warm, friendly, and student-focused. Every theme keeps 100% of Adarsha High School's content, pages, and functionality intact.
           </p>
         </div>
 

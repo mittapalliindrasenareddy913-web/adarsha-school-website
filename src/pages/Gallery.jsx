@@ -31,8 +31,8 @@ export default function Gallery() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="Campus Photo & Media Gallery | Adarsha E.M. School"
-        description="Browse photo highlights of Adarsha E.M. School classrooms, sports events, science labs, and cultural celebrations."
+        title="Campus Photo & Media Gallery | Adarsha High School"
+        description="Browse photo highlights of Adarsha High School classrooms, sports events, science labs, and cultural celebrations."
       />
 
       <PageHero

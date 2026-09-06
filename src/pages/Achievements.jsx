@@ -20,8 +20,8 @@ export default function Achievements() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="Student Achievements & Milestones | Adarsha E.M. School"
-        description="Celebrating student performance across board exams, sports championships, and cultural awards at Adarsha E.M. School."
+        title="Student Achievements & Milestones | Adarsha High School"
+        description="Celebrating student performance across board exams, sports championships, and cultural awards at Adarsha High School."
       />
 
       <PageHero

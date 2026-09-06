@@ -20,8 +20,8 @@ export default function Facilities() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="Campus Facilities & Infrastructure | Adarsha E.M. School"
-        description="Explore smart classrooms, science laboratories, computer hub, sports complex, and campus security at Adarsha E.M. School."
+        title="Campus Facilities & Infrastructure | Adarsha High School"
+        description="Explore smart classrooms, science laboratories, computer hub, sports complex, and campus security at Adarsha High School."
       />
 
       <PageHero

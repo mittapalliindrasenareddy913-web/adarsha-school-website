@@ -6,7 +6,7 @@ import { GraduationCap, MapPin, Phone, Mail, Clock, ExternalLink, ChevronRight, 
 export default function Footer() {
   const { siteSettings } = useSiteSettings();
 
-  const schoolName = siteSettings?.schoolName || 'Adarsha E.M. School';
+  const schoolName = siteSettings?.schoolName || 'Adarsha High School';
   const address = String(siteSettings?.location?.address || 'Cross Road, Thamballapalle, Andhra Pradesh, India');
   const phonePrimary = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
   const phoneSecondary = siteSettings?.contact?.phoneSecondary ? String(siteSettings.contact.phoneSecondary) : '';

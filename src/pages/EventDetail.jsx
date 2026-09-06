@@ -50,7 +50,7 @@ export default function EventDetail() {
 
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
-      <SEO title={`${event.name} | Adarsha E.M. School`} description={event.shortDescription} />
+      <SEO title={`${event.name} | Adarsha High School`} description={event.shortDescription} />
 
       {/* Hero Cover */}
       <section className="relative pt-36 pb-20 sm:pt-44 sm:pb-24 bg-[#0B192C] text-white overflow-hidden border-b border-slate-800">

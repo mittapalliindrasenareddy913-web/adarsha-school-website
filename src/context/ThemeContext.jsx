@@ -4,7 +4,7 @@ import { themesData } from '../data/themesData';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  // ADARSHA E.M. SCHOOL — INSTITUTIONAL NAVY & AMBER DESIGN
+  // ADARSHA HIGH SCHOOL — INSTITUTIONAL NAVY & AMBER DESIGN
   const defaultThemeId = 'institutional-navy';
 
   const [activeThemeId] = useState(defaultThemeId);

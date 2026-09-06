@@ -20,8 +20,8 @@ export default function Faculty() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="Faculty & Educators Directory | Adarsha E.M. School"
-        description="Meet the dedicated teaching faculty and department educators at Adarsha E.M. School."
+        title="Faculty & Educators Directory | Adarsha High School"
+        description="Meet the dedicated teaching faculty and department educators at Adarsha High School."
       />
 
       <PageHero

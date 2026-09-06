@@ -21,8 +21,8 @@ export default function Events() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="School Events & Functions | Adarsha E.M. School"
-        description="Explore upcoming annual day galas, sports meets, science fairs, and school celebrations at Adarsha E.M. School."
+        title="School Events & Functions | Adarsha High School"
+        description="Explore upcoming annual day galas, sports meets, science fairs, and school celebrations at Adarsha High School."
       />
 
       <PageHero

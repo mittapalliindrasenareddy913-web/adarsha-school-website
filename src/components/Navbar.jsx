@@ -36,7 +36,7 @@ export default function Navbar() {
   const location = useLocation();
   const { siteSettings } = useSiteSettings();
 
-  const schoolName = siteSettings?.schoolName || 'Adarsha E.M. School';
+  const schoolName = siteSettings?.schoolName || 'Adarsha High School';
   const primaryPhone = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
   const primaryEmail = String(siteSettings?.contact?.email || 'info@adarshaemschool.edu.in');
   const workingHours = String(siteSettings?.contact?.workingHours || 'Mon - Sat: 8:30 AM – 4:30 PM');
@@ -502,7 +502,7 @@ export default function Navbar() {
               
               <div className="border-b border-slate-200 pb-3">
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#D97706] block mb-1">
-                  ADARSHA E.M. SCHOOL
+                  ADARSHA HIGH SCHOOL
                 </span>
                 <h2 className="text-xl font-extrabold text-[#0B192C]">
                   School Navigation Menu

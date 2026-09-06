@@ -40,7 +40,7 @@ export default function AnnouncementDetail() {
 
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
-      <SEO title={`${announcement.title} | Adarsha E.M. School`} description={announcement.shortDescription} />
+      <SEO title={`${announcement.title} | Adarsha High School`} description={announcement.shortDescription} />
 
       <section className="relative pt-36 pb-20 sm:pt-44 sm:pb-24 bg-[#0B192C] text-white overflow-hidden border-b border-slate-800">
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">

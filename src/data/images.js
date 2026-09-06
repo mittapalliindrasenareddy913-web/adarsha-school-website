@@ -1,4 +1,4 @@
-// Centralized Image Registry for Adarsha E.M. School
+// Centralized Image Registry for Adarsha High School
 // All static stock photos have been removed per Media Reset instruction.
 // All media is now dynamically populated via Admin Panel & Cloudflare R2.
 

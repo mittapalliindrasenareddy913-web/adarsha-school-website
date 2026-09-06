@@ -145,7 +145,7 @@ export default function AdmissionForm() {
 
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <a
-            href={`https://wa.me/${schoolData.contact.whatsappNumber}?text=Hello%20Adarsha%20E.M.%20School,%20I%20have%20submitted%20admission%20enquiry%20Ref:%20${refId}`}
+            href={`https://wa.me/${schoolData.contact.whatsappNumber}?text=Hello%20Adarsha%20High%20School,%20I%20have%20submitted%20admission%20enquiry%20Ref:%20${refId}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition-colors"

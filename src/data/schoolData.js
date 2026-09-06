@@ -1,10 +1,10 @@
-// Centralized school data configuration for Adarsha E.M. School client demo.
-// Factual details verified from Google Maps location: Adarsha E.M. School, Thamballapalle, Andhra Pradesh.
+// Centralized school data configuration for Adarsha High School.
+// Factual details verified from Google Maps location: Adarsha High School, Thamballapalle, Andhra Pradesh.
 // Unverified metrics (phone numbers, specific affiliations, staff names) are clearly marked with demo placeholders.
 
 export const schoolData = {
-  name: "Adarsha E.M. School",
-  fullName: "Adarsha English Medium School",
+  name: "Adarsha High School",
+  fullName: "Adarsha High School",
   tagline: "Empowering Young Minds, Building Bright Futures",
   shortTagline: "Nurturing Character & Academic Excellence",
   

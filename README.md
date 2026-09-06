@@ -1,4 +1,4 @@
-# Adarsha E.M. School — Client Demo Website
+# Adarsha High School — Official Website
 
 A premium, modern, professional, and fully responsive school website demo built for **Adarsha High School**, located in **Thamballapalle, Andhra Pradesh, India**.
 

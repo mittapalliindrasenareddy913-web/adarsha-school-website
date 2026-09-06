@@ -7,7 +7,7 @@ export default function FloatingButtons() {
   const { siteSettings, getWhatsAppUrl } = useSiteSettings();
 
   const primaryPhone = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
-  const whatsappUrl = getWhatsAppUrl('Hello Adarsha E.M. School, I would like to enquire about admissions.');
+  const whatsappUrl = getWhatsAppUrl('Hello Adarsha High School, I would like to enquire about admissions.');
 
   return (
     <>

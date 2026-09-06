@@ -34,7 +34,7 @@ export function SiteProvider({ children }) {
     const rawNumber = siteSettings?.contact?.whatsappNumber || siteSettings?.contact?.phonePrimary || siteContent.contact.whatsappNumber;
     const digitsOnly = String(rawNumber).replace(/[^0-9]/g, '');
     const cleanNumber = digitsOnly.length === 10 ? `91${digitsOnly}` : (digitsOnly || '919876543210');
-    const msg = customText || 'Hello Adarsha E.M. School, I would like to enquire about admissions.';
+    const msg = customText || 'Hello Adarsha High School, I would like to enquire about admissions.';
     return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(msg)}`;
   };
 

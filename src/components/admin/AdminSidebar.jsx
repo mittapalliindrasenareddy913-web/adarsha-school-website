@@ -90,7 +90,7 @@ export default function AdminSidebar({ closeMobile, unreadCounts = {} }) {
           </div>
           <div>
             <h2 className="text-sm font-extrabold text-slate-900 tracking-tight">Admin Portal</h2>
-            <p className="text-[10px] text-amber-800 font-semibold">Adarsha E.M. School</p>
+            <p className="text-[10px] text-amber-800 font-semibold">Adarsha High School</p>
           </div>
         </Link>
       </div>

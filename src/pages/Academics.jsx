@@ -57,8 +57,8 @@ export default function Academics() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="Academic Programs & Curriculum | Adarsha E.M. School"
-        description="Explore the structured academic levels (Primary, Middle, High School) and pedagogy at Adarsha E.M. School."
+        title="Academic Programs & Curriculum | Adarsha High School"
+        description="Explore the structured academic levels (Primary, Middle, High School) and pedagogy at Adarsha High School."
       />
 
       <PageHero
@@ -82,7 +82,7 @@ export default function Academics() {
           />
 
           <p className="text-slate-700 text-base leading-relaxed">
-            {academics?.philosophy || "At Adarsha E.M. School, we prioritize conceptual mastery over rote memorization. Our teachers use interactive learning aids, regular assessment cycles, and individual mentoring to ensure steady academic growth."}
+            {academics?.philosophy || "At Adarsha High School, we prioritize conceptual mastery over rote memorization. Our teachers use interactive learning aids, regular assessment cycles, and individual mentoring to ensure steady academic growth."}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">

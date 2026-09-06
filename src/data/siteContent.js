@@ -3,14 +3,14 @@
 // In Phase 2, this file can be replaced by API calls to `getSiteSettings()`.
 
 export const siteContent = {
-  schoolName: "Adarsha E.M. School",
-  schoolFullName: "Adarsha English Medium School",
+  schoolName: "Adarsha High School",
+  schoolFullName: "Adarsha High School",
   tagline: "Where Curiosity Becomes Confidence.",
   subTagline: "An environment where young minds learn, explore, create, and prepare for tomorrow.",
   
   // Hero Copy
   hero: {
-    eyebrow: "ADARSHA E.M. SCHOOL",
+    eyebrow: "ADARSHA HIGH SCHOOL",
     headlineLine1: "Where Curiosity",
     headlineLine2: "Becomes Confidence.",
     subheadline: "An environment where young minds learn, explore, create, and prepare for tomorrow.",
@@ -26,7 +26,7 @@ export const siteContent = {
     eyebrow: "THE ADARSHA EXPERIENCE",
     headlineLine1: "Learning is more than",
     headlineLine2: "what happens inside a classroom.",
-    description: "At Adarsha E.M. School, we foster an educational culture that balances conceptual understanding with moral values, physical well-being, and creative expression. Every student is encouraged to discover their unique strengths in a safe, inspiring environment.",
+    description: "At Adarsha High School, we foster an educational culture that balances conceptual understanding with moral values, physical well-being, and creative expression. Every student is encouraged to discover their unique strengths in a safe, inspiring environment.",
     ctaText: "Discover Our Story",
     ctaLink: "/about"
   },

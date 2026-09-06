@@ -131,7 +131,7 @@ export default function Contact() {
               )}
 
               <a
-                href={getWhatsAppUrl('Hello Adarsha E.M. School, I would like to enquire about campus details.')}
+                href={getWhatsAppUrl('Hello Adarsha High School, I would like to enquire about campus details.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 py-2.5 px-5 rounded-lg font-bold text-xs bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-xs"
@@ -170,7 +170,7 @@ export default function Contact() {
                     Message Received!
                   </h3>
                   <p className="text-xs text-slate-600 mt-1 max-w-md mx-auto">
-                    Thank you for contacting Adarsha E.M. School. We will get back to you soon.
+                    Thank you for contacting Adarsha High School. We will get back to you soon.
                   </p>
                 </div>
 
@@ -326,7 +326,7 @@ export default function Contact() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="relative rounded-lg overflow-hidden border border-slate-200 shadow-md h-96 bg-white p-2">
           <iframe
-            title="Adarsha E.M. School Location Map"
+            title="Adarsha High School Location Map"
             src={siteData?.location?.embedMapUrl}
             width="100%"
             height="100%"

@@ -1,4 +1,4 @@
-// Production REST API Service Layer for Adarsha E.M. School
+// Production REST API Service Layer for Adarsha High School
 // Connects React Public Website and Admin CMS directly to the Node.js + Express + MongoDB Backend.
 
 const getApiBaseUrl = () => {

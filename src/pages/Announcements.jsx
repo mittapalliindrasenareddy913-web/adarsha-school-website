@@ -21,8 +21,8 @@ export default function Announcements() {
   return (
     <div className="font-sans bg-[#F8FAFC] text-[#0F172A] pb-20">
       <SEO
-        title="School Announcements & Official Notices | Adarsha E.M. School"
-        description="Stay updated with official notices, exam timetables, holiday schedules, and admission alerts from Adarsha E.M. School."
+        title="School Announcements & Official Notices | Adarsha High School"
+        description="Stay updated with official notices, exam timetables, holiday schedules, and admission alerts from Adarsha High School."
       />
 
       <PageHero
