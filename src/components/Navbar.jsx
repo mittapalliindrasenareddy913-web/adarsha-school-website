@@ -37,8 +37,8 @@ export default function Navbar() {
   const { siteSettings } = useSiteSettings();
 
   const schoolName = siteSettings?.schoolName || 'Adarsha High School';
-  const primaryPhone = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
-  const primaryEmail = String(siteSettings?.contact?.email || 'info@adarshaemschool.edu.in');
+  const primaryPhone = String(siteSettings?.contact?.phonePrimary || '+91 8222844480');
+  const primaryEmail = String(siteSettings?.contact?.email || 'info@adarshaschool.in');
   const workingHours = String(siteSettings?.contact?.workingHours || 'Mon - Sat: 8:30 AM – 4:30 PM');
   const rawLandmark = String(siteSettings?.location?.landmark || siteSettings?.location?.address || 'Cross Road, Thamballapalle');
   const addressShort = rawLandmark.replace(/Near Main Road,\s*Kadiri/gi, 'Cross Road, Thamballapalle').replace(/Kadiri/gi, 'Thamballapalle');
@@ -465,23 +465,34 @@ export default function Navbar() {
             
             <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0 relative">
               <div className="animate-marquee gap-6 inline-flex items-center">
-                {[...tickerAnnouncements, ...tickerAnnouncements].map((item, idx) => (
-                  <Link
-                    key={`${item._id || item.id || idx}-${idx}`}
-                    to="/announcements"
-                    className="inline-flex items-center gap-2 text-white hover:underline cursor-pointer mr-6 shrink-0"
-                  >
-                    <span className="font-extrabold px-1.5 py-0.5 rounded bg-black/20 text-[9px] uppercase tracking-wider">
-                      {item.category || 'NOTICE'}
-                    </span>
-                    <span className="font-bold text-xs">{item.title}</span>
-                    {item.shortDescription && (
-                      <span className="opacity-90 font-normal text-xs hidden sm:inline">
-                        ({item.shortDescription})
+                {(() => {
+                  const list = tickerAnnouncements;
+                  let itemsToRender = list;
+                  if (list.length === 1) {
+                    itemsToRender = [list[0], list[0], list[0], list[0]];
+                  } else if (list.length === 2) {
+                    itemsToRender = [...list, ...list, ...list, ...list];
+                  } else {
+                    itemsToRender = [...list, ...list];
+                  }
+                  return itemsToRender.map((item, idx) => (
+                    <Link
+                      key={`${item._id || item.id || idx}-${idx}`}
+                      to="/announcements"
+                      className="inline-flex items-center gap-2 text-white hover:underline cursor-pointer mr-8 shrink-0"
+                    >
+                      <span className="font-extrabold px-1.5 py-0.5 rounded bg-black/20 text-[9px] uppercase tracking-wider">
+                        {item.category || 'NOTICE'}
                       </span>
-                    )}
-                  </Link>
-                ))}
+                      <span className="font-bold text-xs">{item.title}</span>
+                      {item.shortDescription && (
+                        <span className="opacity-90 font-normal text-xs hidden sm:inline">
+                          ({item.shortDescription})
+                        </span>
+                      )}
+                    </Link>
+                  ));
+                })()}
               </div>
             </div>
           </div>

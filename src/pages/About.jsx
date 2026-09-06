@@ -7,7 +7,10 @@ import SectionHeading from '../components/SectionHeading';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Award, Sparkles, BookOpen, Calendar, GraduationCap, Heart, CheckCircle2 } from 'lucide-react';
 
+import { useSiteSettings } from '../context/SiteContext';
+
 export default function About() {
+  const { siteSettings } = useSiteSettings();
   const [siteData, setSiteData] = useState(null);
 
   useEffect(() => {
@@ -18,7 +21,8 @@ export default function About() {
     loadData();
   }, []);
 
-  const about = siteData?.about || {};
+  const site = siteSettings || siteData;
+  const about = site?.about || {};
 
   // Paragraph helper
   const renderParagraphs = (text) => {

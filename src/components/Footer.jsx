@@ -8,11 +8,11 @@ export default function Footer() {
 
   const schoolName = siteSettings?.schoolName || 'Adarsha High School';
   const address = String(siteSettings?.location?.address || 'Cross Road, Thamballapalle, Andhra Pradesh, India');
-  const phonePrimary = String(siteSettings?.contact?.phonePrimary || '+91 98765 43210');
+  const phonePrimary = String(siteSettings?.contact?.phonePrimary || '+91 8222844480');
   const phoneSecondary = siteSettings?.contact?.phoneSecondary ? String(siteSettings.contact.phoneSecondary) : '';
-  const whatsappNumber = String(siteSettings?.contact?.whatsappNumber || '919876543210');
-  const email = String(siteSettings?.contact?.email || 'info@adarshaemschool.edu.in');
-  const admissionsEmail = String(siteSettings?.contact?.admissionsEmail || siteSettings?.contact?.email || 'admissions@adarshaemschool.edu.in');
+  const whatsappNumber = String(siteSettings?.contact?.whatsappNumber || '918222844480');
+  const email = String(siteSettings?.contact?.email || 'info@adarshaschool.in');
+  const admissionsEmail = String(siteSettings?.contact?.admissionsEmail || siteSettings?.contact?.email || 'info@adarshaschool.in');
   const workingHours = String(siteSettings?.contact?.workingHours || 'Monday to Saturday: 8:30 AM – 4:30 PM');
   const googleMapsUrl = String(siteSettings?.location?.googleMapsUrl || 'https://maps.app.goo.gl/SkHq86FABbvmB51J6');
 

@@ -19,14 +19,14 @@ export const schoolData = {
   },
 
   contact: {
-    phonePrimary: "+91 98765 43210", // Demo phone number
+    phonePrimary: "+91 8222844480",
     phoneSecondary: "",
-    whatsappNumber: "919876543210",
-    email: "info@adarshaemschool.edu.in", // Demo email
-    admissionsEmail: "admissions@adarshaemschool.edu.in",
+    whatsappNumber: "+91 8222844480",
+    email: "info@adarshaschool.in",
+    admissionsEmail: "info@adarshaschool.in",
     workingHours: "Monday to Saturday: 8:30 AM – 4:30 PM (Closed on Sundays & Public Holidays)",
-    isPhoneDemo: true,
-    isEmailDemo: true,
+    isPhoneDemo: false,
+    isEmailDemo: false,
   },
 
   // Developer Branding (Easily replaceable)
@@ -316,6 +316,6 @@ export const schoolData = {
     { name: "Facebook", url: "https://facebook.com", icon: "Facebook", isDemo: true },
     { name: "Instagram", url: "https://instagram.com", icon: "Instagram", isDemo: true },
     { name: "YouTube", url: "https://youtube.com", icon: "Youtube", isDemo: true },
-    { name: "WhatsApp", url: "https://wa.me/919876543210", icon: "MessageSquare", isDemo: true }
+    { name: "WhatsApp", url: "https://wa.me/918222844480", icon: "MessageSquare", isDemo: false }
   ]
 };

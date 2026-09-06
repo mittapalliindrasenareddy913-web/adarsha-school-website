@@ -5,15 +5,27 @@
 export const siteContent = {
   schoolName: "Adarsha High School",
   schoolFullName: "Adarsha High School",
-  tagline: "Where Curiosity Becomes Confidence.",
-  subTagline: "An environment where young minds learn, explore, create, and prepare for tomorrow.",
+  tagline: "Bringing corporate-standard education to every child at affordable and accessible fees.",
+  subTagline: "కార్పొరేట్ స్థాయి విద్యను అందుబాటు ఫీజులతో ప్రతి విద్యార్థికి అందించడమే మా లక్ష్యం",
   
+  // Home CMS Sub-Object
+  home: {
+    heroTagline: "Bringing corporate-standard education to every child at affordable and accessible fees.",
+    heroSubTagline: "కార్పొరేట్ స్థాయి విద్యను అందుబాటు ఫీజులతో ప్రతి విద్యార్థికి అందించడమే మా లక్ష్యం",
+    heroMediaType: "R2_VIDEO",
+    heroImage: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80",
+    heroVideoUrl: "https://pub-178f89930dcd42dc9acf32d9cb439925.r2.dev/school/hero/adarsha-school-video-2556c2ed-06fc-4864-a5e4-609446c81df2.mp4",
+    heroYouTubeUrl: "",
+    aboutSectionHeading: "Welcome to Adarsha High School",
+    aboutText: "At Adarsha High School, we foster an educational culture that balances conceptual understanding with moral values, physical well-being, and creative expression. Every student is encouraged to discover their unique strengths in a safe, inspiring environment."
+  },
+
   // Hero Copy
   hero: {
-    eyebrow: "ADARSHA HIGH SCHOOL",
-    headlineLine1: "Where Curiosity",
-    headlineLine2: "Becomes Confidence.",
-    subheadline: "An environment where young minds learn, explore, create, and prepare for tomorrow.",
+    eyebrow: "ADARSHA HIGH SCHOOL • THAMBALLAPALLE, AP",
+    headlineLine1: "Bringing corporate-standard education",
+    headlineLine2: "to every child at affordable fees.",
+    subheadline: "కార్పొరేట్ స్థాయి విద్యను అందుబాటు ఫీజులతో ప్రతి విద్యార్థికి అందించడమే మా లక్ష్యం",
     primaryCtaText: "EXPLORE OUR SCHOOL",
     primaryCtaLink: "/about",
     secondaryCtaText: "ADMISSIONS",
@@ -31,23 +43,23 @@ export const siteContent = {
     ctaLink: "/about"
   },
 
-  // Location & Contact (Marked as editable placeholders)
+  // Location & Contact
   location: {
     address: "Cross Road, Thamballapalle, Andhra Pradesh, India",
     landmark: "Cross Road, Thamballapalle",
     googleMapsUrl: "https://maps.app.goo.gl/SkHq86FABbvmB51J6",
     embedMapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15444.6!2d78.4483544!3d13.8244027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb2455cd9c3208f%3A0xed5d454df6a552a5!2sAdarsha%20E.M%20school!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
-    note: "Editable location placeholder"
+    note: "Official location"
   },
 
   contact: {
-    phonePrimary: "+91 98765 43210",
+    phonePrimary: "+91 8222844480",
     phoneSecondary: "",
-    whatsappNumber: "919876543210",
-    email: "info@adarshaemschool.edu.in",
-    admissionsEmail: "admissions@adarshaemschool.edu.in",
+    whatsappNumber: "+91 8222844480",
+    email: "info@adarshaschool.in",
+    admissionsEmail: "info@adarshaschool.in",
     workingHours: "Monday to Saturday: 8:30 AM – 4:30 PM",
-    isPlaceholder: true
+    isPlaceholder: false
   },
 
   // Developer Branding (Easily editable)

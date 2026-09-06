@@ -8,7 +8,7 @@ export default function SEO({ title, description, canonical }) {
   const { siteSettings } = useSiteSettings();
 
   const schoolName = siteSettings?.schoolName || 'Adarsha High School';
-  const defaultSiteTitle = siteSettings?.seo?.siteTitle || `${schoolName} | Where Curiosity Becomes Confidence`;
+  const defaultSiteTitle = siteSettings?.seo?.siteTitle || `${schoolName} | Official Portal`;
   const defaultMetaDesc = siteSettings?.seo?.metaDescription || 'Official portal of Adarsha High School, Thamballapalle. Empowering young minds with academic rigor and moral values.';
 
   useEffect(() => {

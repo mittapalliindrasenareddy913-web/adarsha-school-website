@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { api } from '../services/api';
+import { useSiteSettings } from '../context/SiteContext';
 import { images } from '../data/images';
 
 // Static Data Fallbacks
@@ -82,11 +83,13 @@ export default function Home() {
     loadData();
   }, []);
 
-  // Dynamic Content Collections with Fallbacks
-  const displaySite = siteData || siteContent;
+  const { siteSettings } = useSiteSettings();
 
-  const heroTagline = displaySite?.home?.heroTagline || displaySite?.tagline || "Shaping Curious Minds. Building Confident Futures.";
-  const heroSubTagline = displaySite?.home?.heroSubTagline || displaySite?.subTagline || "An environment where young minds learn, explore, create, and prepare for tomorrow with quality education in Thamballapalle.";
+  // Dynamic Content Collections with Fallbacks
+  const displaySite = siteSettings || siteData || siteContent;
+
+  const heroTagline = displaySite?.home?.heroTagline || displaySite?.tagline || "Bringing corporate-standard education to every child at affordable and accessible fees.";
+  const heroSubTagline = displaySite?.home?.heroSubTagline || displaySite?.subTagline || "కార్పొరేట్ స్థాయి విద్యను అందుబాటు ఫీజులతో ప్రతి విద్యార్థికి అందించడమే మా లక్ష్యం";
 
   const displayStats = (siteData?.stats?.length ? siteData.stats : siteContent.stats) || [];
   const displayAcademics = (academics?.levels?.length ? academics.levels : (Array.isArray(academics) && academics.length ? academics : academicsData.levels)) || [];
@@ -194,20 +197,22 @@ export default function Home() {
          ================================================== */}
       <section className="relative min-h-[380px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-start bg-[#0B192C] text-white overflow-hidden py-6 sm:py-12 px-4 sm:px-8 lg:px-16 border-b border-slate-800">
         
-        {/* Dynamic Cloudflare R2 Hero Background (Uploaded by Principal/Admin in Admin Panel) */}
-        {(displaySite?.home?.heroMediaType || siteData?.heroMediaType) === 'R2_VIDEO' && (displaySite?.home?.heroVideoUrl || siteData?.heroVideoUrl) ? (
+        {/* Base Hero Image Background (Always rendered as poster layer so no dark blank state appears while video loads) */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-60 sm:opacity-75 transition-all duration-700 pointer-events-none"
+          style={{ backgroundImage: `url(${displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg})` }}
+        />
+
+        {/* Dynamic Cloudflare R2 Hero Background Video (Rendered on top when heroMediaType === 'R2_VIDEO') */}
+        {(displaySite?.home?.heroMediaType || siteData?.heroMediaType || siteSettings?.heroMediaType) === 'R2_VIDEO' && (displaySite?.home?.heroVideoUrl || siteData?.heroVideoUrl || siteSettings?.heroVideoUrl) && (
           <video
-            src={displaySite?.home?.heroVideoUrl || siteData.heroVideoUrl}
+            src={displaySite?.home?.heroVideoUrl || siteData?.heroVideoUrl || siteSettings?.heroVideoUrl}
+            poster={displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg}
             autoPlay
             loop
             muted
             playsInline
             className="absolute inset-0 w-full h-full object-cover opacity-60 transition-all duration-700"
-          />
-        ) : (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-60 sm:opacity-75 transition-all duration-700"
-            style={{ backgroundImage: `url(${displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg})` }}
           />
         )}
         
