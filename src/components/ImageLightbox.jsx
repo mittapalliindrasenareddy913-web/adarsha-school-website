@@ -122,6 +122,8 @@ export default function ImageLightbox({
               <img
                 src={imageUrl}
                 alt={titleText}
+                fetchPriority="high"
+                decoding="async"
                 className="max-h-[65vh] w-auto max-w-full object-contain rounded-lg shadow-md select-none"
               />
             )}

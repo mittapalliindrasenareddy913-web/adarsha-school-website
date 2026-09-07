@@ -131,6 +131,8 @@ export default function EventDetail() {
                     src={photo.url}
                     alt={photo.caption || event.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading={idx < 4 ? "eager" : "lazy"}
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/70 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
                   {photo.caption && (
@@ -166,6 +168,8 @@ export default function EventDetail() {
                     src={vid.thumbnail || event.coverImage}
                     alt={vid.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-12 h-12 rounded-full bg-[#D97706] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">

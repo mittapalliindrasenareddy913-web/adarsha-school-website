@@ -94,6 +94,9 @@ export default function Gallery() {
                           src={itemUrl}
                           alt={item.title || "Adarsha Campus Photo"}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading={idx < 6 ? "eager" : "lazy"}
+                          fetchPriority={idx < 3 ? "high" : "auto"}
+                          decoding="async"
                         />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />

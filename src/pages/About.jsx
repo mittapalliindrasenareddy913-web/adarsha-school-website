@@ -72,6 +72,8 @@ export default function About() {
                       <img
                         src={photo}
                         alt={corr.name || "Director"}
+                        fetchPriority="high"
+                        decoding="async"
                         className="w-full h-full object-cover rounded-xl"
                       />
                     ) : (
@@ -129,6 +131,8 @@ export default function About() {
                       <img
                         src={photo}
                         alt={prin.name || "Principal"}
+                        fetchPriority="high"
+                        decoding="async"
                         className="w-full h-full object-cover rounded-xl"
                       />
                     ) : (

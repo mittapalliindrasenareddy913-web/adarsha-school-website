@@ -145,6 +145,8 @@ export default function Academics() {
                         src={displayImg}
                         alt={lvl.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading={idx < 2 ? "eager" : "lazy"}
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 via-transparent to-transparent opacity-60 group-hover:opacity-85 transition-opacity" />
                       <div className="absolute bottom-4 right-4 px-3 py-1.5 rounded-lg bg-[#0B192C]/90 text-white text-xs font-bold flex items-center gap-2 border border-slate-700 shadow-sm group-hover:bg-blue-600 transition-colors">

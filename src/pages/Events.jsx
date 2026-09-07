@@ -53,6 +53,8 @@ export default function Events() {
                         src={ev.coverImage || ev.imageUrl || ev.url}
                         alt={ev.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading={idx < 4 ? "eager" : "lazy"}
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 via-transparent to-transparent" />
                     </>

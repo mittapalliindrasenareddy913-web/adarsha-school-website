@@ -198,9 +198,12 @@ export default function Home() {
       <section className="relative min-h-[380px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-start bg-[#0B192C] text-white overflow-hidden py-6 sm:py-12 px-4 sm:px-8 lg:px-16 border-b border-slate-800">
         
         {/* Base Hero Image Background (Always rendered as poster layer so no dark blank state appears while video loads) */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-60 sm:opacity-75 transition-all duration-700 pointer-events-none"
-          style={{ backgroundImage: `url(${displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg})` }}
+        <img
+          src={displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg}
+          alt="Adarsha High School Hero"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover opacity-60 sm:opacity-75 transition-all duration-700 pointer-events-none"
         />
 
         {/* Dynamic Cloudflare R2 Hero Background Video (Rendered on top when heroMediaType === 'R2_VIDEO') */}
@@ -364,6 +367,8 @@ export default function Home() {
                         <img
                           src={photo}
                           alt={corr.name || "Director"}
+                          fetchPriority="high"
+                          decoding="async"
                           className="w-full h-full object-cover rounded-xl"
                         />
                       ) : (
@@ -417,6 +422,8 @@ export default function Home() {
                         <img
                           src={photo}
                           alt={prin.name || "Principal"}
+                          fetchPriority="high"
+                          decoding="async"
                           className="w-full h-full object-cover rounded-xl"
                         />
                       ) : (

@@ -50,6 +50,8 @@ export default function Faculty() {
                     src={teacher.photo || teacher.imageUrl || teacher.url}
                     alt={teacher.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading={idx < 4 ? "eager" : "lazy"}
+                    decoding="async"
                   />
                 ) : (
                   <User className="w-14 h-14 text-indigo-600/70" />

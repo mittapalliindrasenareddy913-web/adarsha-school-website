@@ -19,7 +19,21 @@ const getApiBaseUrl = () => {
 
 const API_BASE_URL = getApiBaseUrl();
 
+// In-Memory Cache for Public GET Endpoints to eliminate API waterfalls and speed up image discovery
+const publicCache = new Map();
+const CACHE_TTL_MS = 180000; // 3 minutes TTL
+
 async function fetchAPI(endpoint, options = {}) {
+  const method = (options.method || 'GET').toUpperCase();
+  const isPublicGet = method === 'GET' && endpoint.startsWith('/public/');
+
+  if (isPublicGet && publicCache.has(endpoint)) {
+    const cached = publicCache.get(endpoint);
+    if (Date.now() - cached.timestamp < CACHE_TTL_MS) {
+      return cached.data;
+    }
+  }
+
   const defaultOptions = {
     credentials: 'include', // Ensures HttpOnly JWT cookies are sent with requests
     headers: {}
@@ -74,6 +88,17 @@ async function fetchAPI(endpoint, options = {}) {
     }
     throw new Error(data?.message || `API Request Failed (HTTP ${response.status})`);
   }
+
+  // Cache successful public GET responses
+  if (isPublicGet && data?.success !== false) {
+    publicCache.set(endpoint, { timestamp: Date.now(), data });
+  }
+
+  // Clear cache on write operations (POST, PUT, DELETE)
+  if (method !== 'GET') {
+    publicCache.clear();
+  }
+
   return data;
 }
 

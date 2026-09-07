@@ -16,9 +16,12 @@ export default function PageHero({
     <section className="relative py-12 sm:py-16 lg:py-20 bg-[#0B192C] text-white overflow-hidden border-b border-slate-800 font-sans">
       {/* Background Image Overlay */}
       {bgImage && (
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-20 scale-105 transition-transform duration-1000"
-          style={{ backgroundImage: `url(${bgImage})` }}
+        <img
+          src={bgImage}
+          alt=""
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover opacity-20 scale-105 transition-transform duration-1000"
         />
       )}
       <div className={`absolute inset-0 bg-gradient-to-r from-[#0B192C] via-[#0B192C]/90 ${gradientTo}`} />
