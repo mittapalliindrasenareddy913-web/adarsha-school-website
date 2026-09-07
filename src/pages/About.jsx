@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { images } from '../data/images';
 import { siteContent } from '../data/siteContent';
@@ -9,6 +9,83 @@ import { motion } from 'framer-motion';
 import { ShieldCheck, Award, Sparkles, BookOpen, Calendar, GraduationCap, Heart, CheckCircle2 } from 'lucide-react';
 
 import { useSiteSettings } from '../context/SiteContext';
+
+// Leadership Card Image Component for About page (emerald styling)
+function LeadershipCardImageAbout({ photo, alt, roleLabel, name, designation }) {
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  useEffect(() => {
+    setImgLoaded(false);
+  }, [photo]);
+
+  return (
+    <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
+      {photo ? (
+        <>
+          {!imgLoaded && (
+            <div className="absolute inset-0 bg-slate-800 animate-pulse rounded-xl z-10" />
+          )}
+          <img
+            src={photo}
+            alt={alt || roleLabel}
+            fetchPriority="high"
+            decoding="async"
+            onLoad={() => setImgLoaded(true)}
+            className={`w-full h-full object-cover rounded-xl transition-opacity duration-300 ${
+              imgLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        </>
+      ) : (
+        <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
+          <Award className="w-12 h-12 text-emerald-400 opacity-80" />
+          <h4 className="text-base font-extrabold tracking-wide uppercase">{roleLabel} PHOTO</h4>
+          <span className="text-[10px] text-emerald-400/80 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
+            Photo can be uploaded via Admin CMS
+          </span>
+        </div>
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none z-20" />
+      <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none z-30">
+        <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-emerald-500/30 inline-block mb-1">
+          {roleLabel}
+        </span>
+        <h4 className="text-lg font-extrabold text-white">{name || `${roleLabel} Desk`}</h4>
+        <p className="text-xs text-slate-300">{designation || roleLabel}</p>
+      </div>
+    </div>
+  );
+}
+
+// Layout-matching Skeleton component for About page
+function LeadershipSkeletonAbout() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+      {[1, 2].map((idx) => (
+        <div key={idx} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
+          <div className="space-y-4">
+            <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-200 animate-pulse">
+              <div className="absolute bottom-4 left-4 right-4 space-y-2">
+                <div className="h-3 w-16 bg-slate-300 rounded animate-pulse" />
+                <div className="h-5 w-40 bg-slate-300 rounded animate-pulse" />
+                <div className="h-3 w-24 bg-slate-300 rounded animate-pulse" />
+              </div>
+            </div>
+            <div className="h-10 w-full bg-slate-100 rounded-xl animate-pulse" />
+            <div className="space-y-2 pt-1">
+              <div className="h-3 w-full bg-slate-100 rounded animate-pulse" />
+              <div className="h-3 w-5/6 bg-slate-100 rounded animate-pulse" />
+              <div className="h-3 w-4/6 bg-slate-100 rounded animate-pulse" />
+            </div>
+          </div>
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <div className="h-3 w-44 bg-slate-100 rounded animate-pulse" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function About() {
   const { siteSettings, rawSettings, loading } = useSiteSettings();
@@ -50,135 +127,94 @@ export default function About() {
           subtitle="Education is not merely the accumulation of facts, but the training of the mind to think and character to lead."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-          {/* DIRECTOR PROFILE */}
-          {(displaySite?.leadership?.correspondent?.enabled ?? true) && (() => {
-            const rawCorr = rawSettings?.leadership?.correspondent;
-            const corr = rawSettings ? (rawCorr || {}) : (displaySite?.leadership?.correspondent || {});
-            const photo = rawSettings
-              ? (rawCorr?.photo || rawSettings?.leadershipPhoto || '')
-              : (displaySite?.leadership?.correspondent?.photo || displaySite?.leadershipPhoto || '');
-            const isSiteLoading = loading && !rawSettings;
-            return (
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
-                <div className="space-y-4">
-                  <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
-                    {isSiteLoading ? (
-                      <div className="w-full h-full bg-slate-800 animate-pulse rounded-xl" />
-                    ) : photo ? (
-                      <img
-                        src={photo}
-                        alt={corr.name || "Director"}
-                        fetchPriority="high"
-                        decoding="async"
-                        className="w-full h-full object-cover rounded-xl"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
-                        <Award className="w-12 h-12 text-emerald-400 opacity-80" />
-                        <h4 className="text-base font-extrabold tracking-wide uppercase">DIRECTOR PHOTO</h4>
-                        <span className="text-[10px] text-emerald-400/80 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
-                          Photo can be uploaded via Admin CMS
-                        </span>
-                      </div>
+        {loading && !rawSettings ? (
+          <LeadershipSkeletonAbout />
+        ) : (() => {
+          const activeSettings = rawSettings || siteSettings;
+          const corr = activeSettings?.leadership?.correspondent || {};
+          const prin = activeSettings?.leadership?.principal || {};
+
+          const corrPhoto = rawSettings
+            ? (rawSettings.leadership?.correspondent?.photo || rawSettings?.leadershipPhoto || '')
+            : (activeSettings?.leadership?.correspondent?.photo || activeSettings?.leadershipPhoto || '');
+          const prinPhoto = rawSettings
+            ? (rawSettings.leadership?.principal?.photo || '')
+            : (activeSettings?.leadership?.principal?.photo || '');
+
+          return (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+              {/* DIRECTOR PROFILE */}
+              {(corr.enabled ?? true) && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
+                  <div className="space-y-4">
+                    <LeadershipCardImageAbout
+                      photo={corrPhoto}
+                      alt={corr.name || "Director"}
+                      roleLabel="DIRECTOR"
+                      name={corr.name}
+                      designation={corr.designation && corr.designation !== 'Correspondent' ? corr.designation : "Director"}
+                    />
+
+                    {corr.quote && (
+                      <p className="text-xs italic font-semibold text-emerald-900 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                        "{corr.quote}"
+                      </p>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-emerald-500/30 inline-block mb-1">
-                        DIRECTOR
-                      </span>
-                      <h4 className="text-lg font-extrabold text-white">{corr.name || "Director Desk"}</h4>
-                      <p className="text-xs text-slate-300">{corr.designation && corr.designation !== 'Correspondent' ? corr.designation : "Director"}</p>
-                    </div>
+
+                    {corr.message ? (
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        {corr.message}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        Welcome to Adarsha High School. Our mission is to nurture confident, ethically grounded, and intellectually curious young minds in a supportive learning environment.
+                      </p>
+                    )}
                   </div>
 
-                  {corr.quote && (
-                    <p className="text-xs italic font-semibold text-emerald-900 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-                      "{corr.quote}"
-                    </p>
-                  )}
-
-                  {corr.message ? (
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                      {corr.message}
-                    </p>
-                  ) : (
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Welcome to Adarsha High School. Our mission is to nurture confident, ethically grounded, and intellectually curious young minds in a supportive learning environment.
-                    </p>
-                  )}
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>Adarsha High School, Thamballapalle</span>
+                  </div>
                 </div>
+              )}
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
-                  <span>Adarsha High School, Thamballapalle</span>
-                </div>
-              </div>
-            );
-          })()}
+              {/* PRINCIPAL PROFILE */}
+              {(prin.enabled ?? true) && (
+                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
+                  <div className="space-y-4">
+                    <LeadershipCardImageAbout
+                      photo={prinPhoto}
+                      alt={prin.name || "Principal"}
+                      roleLabel="PRINCIPAL"
+                      name={prin.name}
+                      designation={prin.designation || "Principal"}
+                    />
 
-          {/* PRINCIPAL PROFILE */}
-          {(displaySite?.leadership?.principal?.enabled ?? true) && (() => {
-            const rawPrin = rawSettings?.leadership?.principal;
-            const prin = rawSettings ? (rawPrin || {}) : (displaySite?.leadership?.principal || {});
-            const photo = rawSettings ? (rawPrin?.photo || '') : (displaySite?.leadership?.principal?.photo || '');
-            const isSiteLoading = loading && !rawSettings;
-            return (
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
-                <div className="space-y-4">
-                  <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
-                    {isSiteLoading ? (
-                      <div className="w-full h-full bg-slate-800 animate-pulse rounded-xl" />
-                    ) : photo ? (
-                      <img
-                        src={photo}
-                        alt={prin.name || "Principal"}
-                        fetchPriority="high"
-                        decoding="async"
-                        className="w-full h-full object-cover rounded-xl"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
-                        <Award className="w-12 h-12 text-emerald-400 opacity-80" />
-                        <h4 className="text-base font-extrabold tracking-wide uppercase">PRINCIPAL PHOTO</h4>
-                        <span className="text-[10px] text-emerald-400/80 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
-                          Photo can be uploaded via Admin CMS
-                        </span>
-                      </div>
+                    {prin.quote && (
+                      <p className="text-xs italic font-semibold text-emerald-900 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                        "{prin.quote}"
+                      </p>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/90 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-emerald-500/30 inline-block mb-1">
-                        PRINCIPAL
-                      </span>
-                      <h4 className="text-lg font-extrabold text-white">{prin.name || "Principal Desk"}</h4>
-                      <p className="text-xs text-slate-300">{prin.designation || "Principal"}</p>
-                    </div>
+
+                    {prin.message ? (
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        {prin.message}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-slate-600 leading-relaxed">
+                        Our dedicated teaching faculty encourages every student to explore their unique strengths, master academic fundamentals, and practice discipline and empathy daily.
+                      </p>
+                    )}
                   </div>
 
-                  {prin.quote && (
-                    <p className="text-xs italic font-semibold text-emerald-900 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-                      "{prin.quote}"
-                    </p>
-                  )}
-
-                  {prin.message ? (
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                      {prin.message}
-                    </p>
-                  ) : (
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Our dedicated teaching faculty encourages every student to explore their unique strengths, master academic fundamentals, and practice discipline and empathy daily.
-                    </p>
-                  )}
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>Adarsha High School, Thamballapalle</span>
+                  </div>
                 </div>
-
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
-                  <span>Adarsha High School, Thamballapalle</span>
-                </div>
-              </div>
-            );
-          })()}
-        </div>
+              )}
+            </div>
+          );
+        })()}
       </section>
 
       {/* 2. INTRODUCTION & HISTORY (LONG-FORM STORY) */}
