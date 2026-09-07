@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { api } from '../services/api';
 import { images } from '../data/images';
+import { siteContent } from '../data/siteContent';
 import SEO from '../components/SEO';
 import PageHero from '../components/PageHero';
 import SectionHeading from '../components/SectionHeading';
@@ -11,18 +12,8 @@ import { useSiteSettings } from '../context/SiteContext';
 
 export default function About() {
   const { siteSettings, rawSettings, loading } = useSiteSettings();
-  const [siteData, setSiteData] = useState(null);
-
-  useEffect(() => {
-    async function loadData() {
-      const data = await api.getSiteSettings();
-      if (data) setSiteData(data);
-    }
-    loadData();
-  }, []);
-
-  const site = siteSettings || siteData;
-  const about = site?.about || {};
+  const displaySite = siteSettings || siteContent;
+  const about = displaySite?.about || {};
 
   // Paragraph helper
   const renderParagraphs = (text) => {
@@ -45,7 +36,7 @@ export default function About() {
         eyebrow="OUR STORY & PHILOSOPHY"
         title="More than a school. A foundation for life."
         subtitle={about.heroSubtitle || "Adarsha High School provides a structured, supportive learning environment dedicated to developing curious, responsible, and ethical students."}
-        bgImage={about.aboutImage || siteData?.leadershipPhoto || images.aboutCampus}
+        bgImage={about.aboutImage || displaySite?.leadershipPhoto || images.aboutCampus}
         badgeBg="bg-emerald-600"
         badgeBorder="border-emerald-400/40"
         gradientTo="to-emerald-950/60"
@@ -61,10 +52,13 @@ export default function About() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {/* DIRECTOR PROFILE */}
-          {(site?.leadership?.correspondent?.enabled ?? true) && (() => {
-            const corr = site?.leadership?.correspondent || {};
-            const photo = corr.photo || site?.leadershipPhoto;
-            const isSiteLoading = loading && !rawSettings && !siteData;
+          {(displaySite?.leadership?.correspondent?.enabled ?? true) && (() => {
+            const rawCorr = rawSettings?.leadership?.correspondent;
+            const corr = rawSettings ? (rawCorr || {}) : (displaySite?.leadership?.correspondent || {});
+            const photo = rawSettings
+              ? (rawCorr?.photo || rawSettings?.leadershipPhoto || '')
+              : (displaySite?.leadership?.correspondent?.photo || displaySite?.leadershipPhoto || '');
+            const isSiteLoading = loading && !rawSettings;
             return (
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
                 <div className="space-y-4">
@@ -123,10 +117,11 @@ export default function About() {
           })()}
 
           {/* PRINCIPAL PROFILE */}
-          {(site?.leadership?.principal?.enabled ?? true) && (() => {
-            const prin = site?.leadership?.principal || {};
-            const photo = prin.photo;
-            const isSiteLoading = loading && !rawSettings && !siteData;
+          {(displaySite?.leadership?.principal?.enabled ?? true) && (() => {
+            const rawPrin = rawSettings?.leadership?.principal;
+            const prin = rawSettings ? (rawPrin || {}) : (displaySite?.leadership?.principal || {});
+            const photo = rawSettings ? (rawPrin?.photo || '') : (displaySite?.leadership?.principal?.photo || '');
+            const isSiteLoading = loading && !rawSettings;
             return (
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
                 <div className="space-y-4">
@@ -288,7 +283,7 @@ export default function About() {
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {(about.values?.length ? about.values : (siteData?.values || [
+          {(about.values?.length ? about.values : (displaySite?.values || [
             { name: "Excellence", desc: "Striving for high standards in academic and personal growth." },
             { name: "Integrity", desc: "Upholding honesty, respect, and ethical principles in all actions." },
             { name: "Curiosity", desc: "Encouraging continuous questioning, discovery, and active learning." },

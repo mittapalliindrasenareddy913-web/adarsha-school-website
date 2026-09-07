@@ -464,23 +464,17 @@ export default function Navbar() {
               <span>NOTICE</span>
             </div>
             
-            <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0 relative">
-              <div className="animate-marquee gap-6 inline-flex items-center">
+            <div className="overflow-hidden whitespace-nowrap flex-1 min-w-0 relative pl-1">
+              <div className="animate-marquee inline-flex items-center">
                 {(() => {
                   const list = tickerAnnouncements;
-                  let itemsToRender = list;
-                  if (list.length === 1) {
-                    itemsToRender = [list[0], list[0], list[0], list[0]];
-                  } else if (list.length === 2) {
-                    itemsToRender = [...list, ...list, ...list, ...list];
-                  } else {
-                    itemsToRender = [...list, ...list];
-                  }
+                  const half = (list.length === 1) ? [list[0], list[0]] : list;
+                  const itemsToRender = [...half, ...half];
                   return itemsToRender.map((item, idx) => (
                     <Link
                       key={`${item._id || item.id || idx}-${idx}`}
                       to="/announcements"
-                      className="inline-flex items-center gap-2 text-white hover:underline cursor-pointer mr-8 shrink-0"
+                      className="inline-flex items-center gap-2 text-white hover:underline cursor-pointer pr-10 shrink-0"
                     >
                       <span className="font-extrabold px-1.5 py-0.5 rounded bg-black/20 text-[9px] uppercase tracking-wider">
                         {item.category || 'NOTICE'}

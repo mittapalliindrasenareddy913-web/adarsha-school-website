@@ -61,7 +61,6 @@ export default function Home() {
   useEffect(() => {
     async function loadData() {
       try {
-        const site = await api.getSiteSettings();
         const evs = await api.getEvents();
         const anns = await api.getAnnouncements();
         const gal = await api.getGallery();
@@ -69,7 +68,6 @@ export default function Home() {
         const facs = await api.getFacilities();
         const acs = await api.getAcademics();
 
-        if (site) setSiteData(site);
         if (Array.isArray(evs) && evs.length) setEvents(evs);
         if (Array.isArray(anns) && anns.length) setAnnouncements(anns);
         if (Array.isArray(gal) && gal.length) setGallery(gal);
@@ -357,9 +355,12 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
             {/* 1. DIRECTOR PROFILE */}
             {(displaySite?.leadership?.correspondent?.enabled ?? true) && (() => {
-              const corr = displaySite?.leadership?.correspondent || {};
-              const photo = corr.photo || displaySite?.leadershipPhoto || siteData?.leadershipPhoto;
-              const isSiteLoading = loading && !rawSettings && !siteData;
+              const rawCorr = rawSettings?.leadership?.correspondent;
+              const corr = rawSettings ? (rawCorr || {}) : (displaySite?.leadership?.correspondent || {});
+              const photo = rawSettings
+                ? (rawCorr?.photo || rawSettings?.leadershipPhoto || '')
+                : (displaySite?.leadership?.correspondent?.photo || displaySite?.leadershipPhoto || '');
+              const isSiteLoading = loading && !rawSettings;
               return (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 space-y-4">
                   <div className="space-y-4">
@@ -415,9 +416,10 @@ export default function Home() {
 
             {/* 2. PRINCIPAL PROFILE */}
             {(displaySite?.leadership?.principal?.enabled ?? true) && (() => {
-              const prin = displaySite?.leadership?.principal || {};
-              const photo = prin.photo;
-              const isSiteLoading = loading && !rawSettings && !siteData;
+              const rawPrin = rawSettings?.leadership?.principal;
+              const prin = rawSettings ? (rawPrin || {}) : (displaySite?.leadership?.principal || {});
+              const photo = rawSettings ? (rawPrin?.photo || '') : (displaySite?.leadership?.principal?.photo || '');
+              const isSiteLoading = loading && !rawSettings;
               return (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 space-y-4">
                   <div className="space-y-4">
