@@ -8,11 +8,18 @@ import { User } from 'lucide-react';
 
 export default function Faculty() {
   const [faculty, setFaculty] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
-      const data = await api.getFaculty();
-      if (data) setFaculty(data);
+      try {
+        const data = await api.getFaculty();
+        if (data) setFaculty(data);
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
@@ -41,37 +48,45 @@ export default function Faculty() {
           subtitle="Qualified educators guiding primary, middle, and secondary students."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {faculty.map((teacher, idx) => (
-            <div key={teacher.id || idx} className="bg-white rounded-lg border border-slate-200 border-t-2 border-t-indigo-600 shadow-xs hover:shadow-md overflow-hidden transition-all group space-y-4 p-6 text-center">
-              <div className="relative w-28 h-28 rounded-full overflow-hidden mx-auto bg-slate-100 border-2 border-indigo-500/40 flex items-center justify-center shadow-xs">
-                {teacher.photo || teacher.imageUrl || teacher.url ? (
-                  <img
-                    src={teacher.photo || teacher.imageUrl || teacher.url}
-                    alt={teacher.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading={idx < 4 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                ) : (
-                  <User className="w-14 h-14 text-indigo-600/70" />
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((n) => (
+              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {faculty.map((teacher, idx) => (
+              <div key={teacher.id || idx} className="bg-white rounded-lg border border-slate-200 border-t-2 border-t-indigo-600 shadow-xs hover:shadow-md overflow-hidden transition-all group space-y-4 p-6 text-center">
+                <div className="relative w-28 h-28 rounded-full overflow-hidden mx-auto bg-slate-100 border-2 border-indigo-500/40 flex items-center justify-center shadow-xs">
+                  {teacher.photo || teacher.imageUrl || teacher.url ? (
+                    <img
+                      src={teacher.photo || teacher.imageUrl || teacher.url}
+                      alt={teacher.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading={idx < 4 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  ) : (
+                    <User className="w-14 h-14 text-indigo-600/70" />
+                  )}
+                </div>
+
+                <div>
+                  <h3 className="text-base font-extrabold text-[#0B192C]">{teacher.name}</h3>
+                  <span className="text-xs font-extrabold text-indigo-600 block mt-0.5">{teacher.designation}</span>
+                  <span className="text-[11px] text-slate-500 block">{teacher.qualification} • {teacher.subject}</span>
+                </div>
+
+                {teacher.bio && (
+                  <div className="pt-2 border-t border-slate-100 text-xs text-slate-600 leading-relaxed">
+                    <p>{teacher.bio}</p>
+                  </div>
                 )}
               </div>
-
-              <div>
-                <h3 className="text-base font-extrabold text-[#0B192C]">{teacher.name}</h3>
-                <span className="text-xs font-extrabold text-indigo-600 block mt-0.5">{teacher.designation}</span>
-                <span className="text-[11px] text-slate-500 block">{teacher.qualification} • {teacher.subject}</span>
-              </div>
-
-              {teacher.bio && (
-                <div className="pt-2 border-t border-slate-100 text-xs text-slate-600 leading-relaxed">
-                  <p>{teacher.bio}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
     </div>

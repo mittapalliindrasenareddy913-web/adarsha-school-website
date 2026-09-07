@@ -9,6 +9,7 @@ import { Image as ImageIcon, Play, Video } from 'lucide-react';
 
 export default function Gallery() {
   const [gallery, setGallery] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -16,8 +17,14 @@ export default function Gallery() {
 
   useEffect(() => {
     async function loadData() {
-      const data = await api.getGallery();
-      if (data) setGallery(data);
+      try {
+        const data = await api.getGallery();
+        if (data) setGallery(data);
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
@@ -65,7 +72,13 @@ export default function Gallery() {
         </div>
 
         {/* Grid Gallery */}
-        {filteredItems.length > 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
+            ))}
+          </div>
+        ) : filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredItems.map((item, idx) => {
               const itemUrl = item.url || item.imageUrl || item.src;

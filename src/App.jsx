@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FloatingButtons from './components/FloatingButtons';
@@ -105,6 +105,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 >
+                  <Route index element={<Navigate to="/admin/dashboard" replace />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="content/home" element={<HomeContentAdmin />} />
                   <Route path="content/about" element={<AboutAdmin />} />

@@ -8,11 +8,18 @@ import { CheckCircle2, Building2 } from 'lucide-react';
 
 export default function Facilities() {
   const [facilities, setFacilities] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
-      const data = await api.getFacilities();
-      if (data) setFacilities(data);
+      try {
+        const data = await api.getFacilities();
+        if (data) setFacilities(data);
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setLoading(false);
+      }
     }
     loadData();
   }, []);
@@ -41,59 +48,67 @@ export default function Facilities() {
           subtitle="Explore the key facilities built to foster student growth, safety, and physical well-being."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-          {facilities.map((fac, idx) => (
-            <div key={fac.id || idx} className="bg-white rounded-lg border border-slate-200 border-t-2 border-t-green-600 shadow-xs overflow-hidden flex flex-col justify-between group">
-              <div>
-                <div className="relative h-60 overflow-hidden bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white">
-                  {fac.image || fac.imageUrl || fac.url ? (
-                    <>
-                      <img
-                        src={fac.image || fac.imageUrl || fac.url}
-                        alt={fac.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 via-transparent to-transparent" />
-                    </>
-                  ) : (
-                    <div className="space-y-2">
-                      <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 mx-auto shadow-inner">
-                        <Building2 className="w-7 h-7" />
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+            {[1, 2, 3, 4].map((n) => (
+              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+            {facilities.map((fac, idx) => (
+              <div key={fac.id || idx} className="bg-white rounded-lg border border-slate-200 border-t-2 border-t-green-600 shadow-xs overflow-hidden flex flex-col justify-between group">
+                <div>
+                  <div className="relative h-60 overflow-hidden bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white">
+                    {fac.image || fac.imageUrl || fac.url ? (
+                      <>
+                        <img
+                          src={fac.image || fac.imageUrl || fac.url}
+                          alt={fac.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 via-transparent to-transparent" />
+                      </>
+                    ) : (
+                      <div className="space-y-2">
+                        <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 mx-auto shadow-inner">
+                          <Building2 className="w-7 h-7" />
+                        </div>
+                        <h4 className="text-base font-bold text-white uppercase">{fac.title}</h4>
                       </div>
-                      <h4 className="text-base font-bold text-white uppercase">{fac.title}</h4>
-                    </div>
-                  )}
-                  
-                  <span className="absolute bottom-4 left-4 px-3 py-1 rounded bg-[#0B192C] text-emerald-400 text-xs font-extrabold shadow-xs border border-emerald-500/20">
-                    {fac.title}
-                  </span>
-                </div>
+                    )}
+                    
+                    <span className="absolute bottom-4 left-4 px-3 py-1 rounded bg-[#0B192C] text-emerald-400 text-xs font-extrabold shadow-xs border border-emerald-500/20">
+                      {fac.title}
+                    </span>
+                  </div>
 
-                <div className="p-7 space-y-4">
-                  <h3 className="text-2xl font-black text-[#0B192C]">{fac.title}</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">{fac.description}</p>
+                  <div className="p-7 space-y-4">
+                    <h3 className="text-2xl font-black text-[#0B192C]">{fac.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{fac.description}</p>
 
-                  {fac.features && fac.features.length > 0 && (
-                    <div className="pt-2">
-                      <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">
-                        Key Infrastructure Features:
-                      </h4>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700">
-                        {fac.features.map((ft, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                            <span>{ft}</span>
-                          </div>
-                        ))}
+                    {fac.features && fac.features.length > 0 && (
+                      <div className="pt-2">
+                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2">
+                          Key Infrastructure Features:
+                        </h4>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold text-slate-700">
+                          {fac.features.map((ft, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                              <span>{ft}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
     </div>

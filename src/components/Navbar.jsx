@@ -319,6 +319,7 @@ export default function Navbar() {
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button
+                onClick={() => setActiveDropdown(prev => prev === 'campus' ? null : 'campus')}
                 className={`inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-bold tracking-wide transition-all ${
                   ['/facilities', '/faculty', '/gallery'].includes(location.pathname)
                     ? 'bg-blue-50 text-[#0B192C] font-extrabold border-b-2 border-[#0B192C]'
