@@ -83,7 +83,7 @@ export default function Home() {
     loadData();
   }, []);
 
-  const { siteSettings } = useSiteSettings();
+  const { siteSettings, rawSettings, loading } = useSiteSettings();
 
   // Dynamic Content Collections with Fallbacks
   const displaySite = siteSettings || siteData || siteContent;
@@ -359,11 +359,14 @@ export default function Home() {
             {(displaySite?.leadership?.correspondent?.enabled ?? true) && (() => {
               const corr = displaySite?.leadership?.correspondent || {};
               const photo = corr.photo || displaySite?.leadershipPhoto || siteData?.leadershipPhoto;
+              const isSiteLoading = loading && !rawSettings && !siteData;
               return (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 space-y-4">
                   <div className="space-y-4">
                     <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
-                      {photo ? (
+                      {isSiteLoading ? (
+                        <div className="w-full h-full bg-slate-800 animate-pulse rounded-xl" />
+                      ) : photo ? (
                         <img
                           src={photo}
                           alt={corr.name || "Director"}
@@ -414,11 +417,14 @@ export default function Home() {
             {(displaySite?.leadership?.principal?.enabled ?? true) && (() => {
               const prin = displaySite?.leadership?.principal || {};
               const photo = prin.photo;
+              const isSiteLoading = loading && !rawSettings && !siteData;
               return (
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 space-y-4">
                   <div className="space-y-4">
                     <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
-                      {photo ? (
+                      {isSiteLoading ? (
+                        <div className="w-full h-full bg-slate-800 animate-pulse rounded-xl" />
+                      ) : photo ? (
                         <img
                           src={photo}
                           alt={prin.name || "Principal"}

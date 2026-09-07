@@ -10,7 +10,7 @@ import { ShieldCheck, Award, Sparkles, BookOpen, Calendar, GraduationCap, Heart,
 import { useSiteSettings } from '../context/SiteContext';
 
 export default function About() {
-  const { siteSettings } = useSiteSettings();
+  const { siteSettings, rawSettings, loading } = useSiteSettings();
   const [siteData, setSiteData] = useState(null);
 
   useEffect(() => {
@@ -61,14 +61,17 @@ export default function About() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {/* DIRECTOR PROFILE */}
-          {(siteData?.leadership?.correspondent?.enabled ?? true) && (() => {
-            const corr = siteData?.leadership?.correspondent || {};
-            const photo = corr.photo || siteData?.leadershipPhoto;
+          {(site?.leadership?.correspondent?.enabled ?? true) && (() => {
+            const corr = site?.leadership?.correspondent || {};
+            const photo = corr.photo || site?.leadershipPhoto;
+            const isSiteLoading = loading && !rawSettings && !siteData;
             return (
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
                 <div className="space-y-4">
                   <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
-                    {photo ? (
+                    {isSiteLoading ? (
+                      <div className="w-full h-full bg-slate-800 animate-pulse rounded-xl" />
+                    ) : photo ? (
                       <img
                         src={photo}
                         alt={corr.name || "Director"}
@@ -120,14 +123,17 @@ export default function About() {
           })()}
 
           {/* PRINCIPAL PROFILE */}
-          {(siteData?.leadership?.principal?.enabled ?? true) && (() => {
-            const prin = siteData?.leadership?.principal || {};
+          {(site?.leadership?.principal?.enabled ?? true) && (() => {
+            const prin = site?.leadership?.principal || {};
             const photo = prin.photo;
+            const isSiteLoading = loading && !rawSettings && !siteData;
             return (
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
                 <div className="space-y-4">
                   <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
-                    {photo ? (
+                    {isSiteLoading ? (
+                      <div className="w-full h-full bg-slate-800 animate-pulse rounded-xl" />
+                    ) : photo ? (
                       <img
                         src={photo}
                         alt={prin.name || "Principal"}
