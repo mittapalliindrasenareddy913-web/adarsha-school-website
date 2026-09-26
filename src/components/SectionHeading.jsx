@@ -7,7 +7,7 @@ export default function SectionHeading({ badge, title, subtitle, align = "center
     <div className={`flex flex-col ${alignClass} mb-8 sm:mb-12 ${className}`}>
       {badge && (
         <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-[11px] font-extrabold uppercase tracking-widest bg-[#0B192C] text-amber-400 border border-amber-500/30 shadow-xs mb-3">
-          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-amber-400" />
           <span>{badge}</span>
         </span>
       )}

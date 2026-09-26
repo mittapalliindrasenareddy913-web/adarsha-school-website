@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 import { images } from '../data/images';
 import { siteContent } from '../data/siteContent';
@@ -12,30 +12,16 @@ import { useSiteSettings } from '../context/SiteContext';
 
 // Leadership Card Image Component for About page (emerald styling)
 function LeadershipCardImageAbout({ photo, alt, roleLabel, name, designation }) {
-  const [imgLoaded, setImgLoaded] = useState(false);
-
-  useEffect(() => {
-    setImgLoaded(false);
-  }, [photo]);
-
   return (
     <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
       {photo ? (
-        <>
-          {!imgLoaded && (
-            <div className="absolute inset-0 bg-slate-800 animate-pulse rounded-xl z-10" />
-          )}
-          <img
-            src={photo}
-            alt={alt || roleLabel}
-            fetchPriority="high"
-            decoding="async"
-            onLoad={() => setImgLoaded(true)}
-            className={`w-full h-full object-cover rounded-xl transition-opacity duration-300 ${
-              imgLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        </>
+        <img
+          src={photo}
+          alt={alt || roleLabel}
+          fetchPriority="high"
+          decoding="async"
+          className="w-full h-full object-cover rounded-xl"
+        />
       ) : (
         <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-emerald-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
           <Award className="w-12 h-12 text-emerald-400 opacity-80" />
@@ -50,42 +36,14 @@ function LeadershipCardImageAbout({ photo, alt, roleLabel, name, designation }) 
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 bg-[#0B192C]/90 px-2.5 py-1 rounded border border-emerald-500/30 inline-block mb-1">
           {roleLabel}
         </span>
-        <h4 className="text-lg font-extrabold text-white">{name || `${roleLabel} Desk`}</h4>
+        <h4 className="text-lg font-extrabold text-[#0B192C] sm:text-white">{name || `${roleLabel} Desk`}</h4>
         <p className="text-xs text-slate-300">{designation || roleLabel}</p>
       </div>
     </div>
   );
 }
 
-// Layout-matching Skeleton component for About page
-function LeadershipSkeletonAbout() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-      {[1, 2].map((idx) => (
-        <div key={idx} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-5 space-y-5">
-          <div className="space-y-4">
-            <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-200 animate-pulse">
-              <div className="absolute bottom-4 left-4 right-4 space-y-2">
-                <div className="h-3 w-16 bg-slate-300 rounded animate-pulse" />
-                <div className="h-5 w-40 bg-slate-300 rounded animate-pulse" />
-                <div className="h-3 w-24 bg-slate-300 rounded animate-pulse" />
-              </div>
-            </div>
-            <div className="h-10 w-full bg-slate-100 rounded-xl animate-pulse" />
-            <div className="space-y-2 pt-1">
-              <div className="h-3 w-full bg-slate-100 rounded animate-pulse" />
-              <div className="h-3 w-5/6 bg-slate-100 rounded animate-pulse" />
-              <div className="h-3 w-4/6 bg-slate-100 rounded animate-pulse" />
-            </div>
-          </div>
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-            <div className="h-3 w-44 bg-slate-100 rounded animate-pulse" />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+
 
 export default function About() {
   const { siteSettings, rawSettings, loading } = useSiteSettings();
@@ -127,9 +85,7 @@ export default function About() {
           subtitle="Education is not merely the accumulation of facts, but the training of the mind to think and character to lead."
         />
 
-        {loading && !rawSettings ? (
-          <LeadershipSkeletonAbout />
-        ) : (() => {
+        {(() => {
           const activeSettings = rawSettings || siteSettings;
           const corr = activeSettings?.leadership?.correspondent || {};
           const prin = activeSettings?.leadership?.principal || {};

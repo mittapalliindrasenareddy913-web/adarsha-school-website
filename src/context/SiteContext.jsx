@@ -5,8 +5,8 @@ import { siteContent } from '../data/siteContent';
 const SiteContext = createContext();
 
 export function SiteProvider({ children }) {
-  const [siteSettings, setSiteSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [siteSettings, setSiteSettings] = useState(siteContent);
+  const [loading, setLoading] = useState(false);
 
   const fetchSettings = useCallback(async () => {
     try {
@@ -16,8 +16,6 @@ export function SiteProvider({ children }) {
       }
     } catch (err) {
       console.warn('[SiteContext] Using siteContent fallback due to API error:', err.message);
-    } finally {
-      setLoading(false);
     }
   }, []);
 

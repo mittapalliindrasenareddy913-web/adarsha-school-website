@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../services/api';
 import { images } from '../data/images';
+import { eventsData } from '../data/events';
 import SEO from '../components/SEO';
 import ImageLightbox from '../components/ImageLightbox';
 import VideoPlayerModal from '../components/VideoPlayerModal';
@@ -9,8 +10,8 @@ import { Calendar, MapPin, Clock, ArrowLeft, Play, Sparkles } from 'lucide-react
 
 export default function EventDetail() {
   const { slug } = useParams();
-  const [event, setEvent] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [event, setEvent] = useState(() => (eventsData || []).find(e => e.slug === slug || e.id === slug || e._id === slug) || null);
+  const [loading, setLoading] = useState(!event);
 
   // Lightbox & Video Player modal states
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -21,10 +22,14 @@ export default function EventDetail() {
 
   useEffect(() => {
     async function loadEvent() {
-      setLoading(true);
-      const data = await api.getEventBySlug(slug);
-      setEvent(data);
-      setLoading(false);
+      try {
+        const data = await api.getEventBySlug(slug);
+        if (data) setEvent(data);
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setLoading(false);
+      }
     }
     loadEvent();
   }, [slug]);
@@ -32,7 +37,7 @@ export default function EventDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0B192C] text-white flex items-center justify-center pt-24 font-sans">
-        <p className="text-sm font-bold text-amber-400 animate-pulse">Loading Event Details...</p>
+        <p className="text-sm font-bold text-amber-400">Loading Event Details...</p>
       </div>
     );
   }
@@ -131,7 +136,7 @@ export default function EventDetail() {
                     src={photo.url}
                     alt={photo.caption || event.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading={idx < 4 ? "eager" : "lazy"}
+                    loading="eager"
                     decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/70 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
@@ -168,7 +173,7 @@ export default function EventDetail() {
                     src={vid.thumbnail || event.coverImage}
                     alt={vid.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60"
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">

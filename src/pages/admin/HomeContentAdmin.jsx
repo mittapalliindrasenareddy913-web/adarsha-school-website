@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 import SEO from '../../components/SEO';
-import { Save, Image, Video, Play } from 'lucide-react';
+import { Save, Image, Video, Play, Volume2, VolumeX } from 'lucide-react';
 import MediaUploader from '../../components/MediaUploader';
 import { useSiteSettings } from '../../context/SiteContext';
 
@@ -17,6 +17,7 @@ export default function HomeContentAdmin() {
     heroMediaType: 'IMAGE',
     heroImage: '',
     heroVideoUrl: '',
+    heroVideoSound: true,
     heroYouTubeUrl: '',
     aboutSectionHeading: 'Welcome to Adarsha High School',
     aboutText: ''
@@ -34,6 +35,7 @@ export default function HomeContentAdmin() {
             heroMediaType: s.home?.heroMediaType || s.heroMediaType || 'IMAGE',
             heroImage: s.home?.heroImage || s.heroImage || '',
             heroVideoUrl: s.home?.heroVideoUrl || s.heroVideoUrl || '',
+            heroVideoSound: s.home?.heroVideoSound ?? s.heroVideoSound ?? true,
             heroYouTubeUrl: s.home?.heroYouTubeUrl || s.heroYouTubeUrl || '',
             aboutSectionHeading: s.home?.aboutSectionHeading || 'Welcome to Adarsha High School',
             aboutText: s.home?.aboutText || ''
@@ -64,6 +66,7 @@ export default function HomeContentAdmin() {
             heroMediaType: res.data.home.heroMediaType || 'IMAGE',
             heroImage: res.data.home.heroImage || '',
             heroVideoUrl: res.data.home.heroVideoUrl || '',
+            heroVideoSound: res.data.home.heroVideoSound ?? true,
             heroYouTubeUrl: res.data.home.heroYouTubeUrl || '',
             aboutSectionHeading: res.data.home.aboutSectionHeading || 'Welcome to Adarsha High School',
             aboutText: res.data.home.aboutText || ''
@@ -167,24 +170,59 @@ export default function HomeContentAdmin() {
             ></textarea>
           </div>
 
-          <MediaUploader
-            mode="image"
-            category="Hero"
-            label="Hero Background Image"
-            value={homeData.heroImage}
-            onChange={(url) => setHomeData({ ...homeData, heroImage: url })}
-            theme="dark"
-          />
-
-          {(homeData.heroMediaType === 'R2_VIDEO' || homeData.heroMediaType === 'CLOUDINARY_VIDEO') && (
+          {homeData.heroMediaType === 'IMAGE' && (
             <MediaUploader
-              mode="video"
+              mode="image"
               category="Hero"
-              label="Direct MP4 / WebM Hero Video (R2 Storage)"
-              value={homeData.heroVideoUrl}
-              onChange={(url) => setHomeData({ ...homeData, heroVideoUrl: url })}
+              label="Hero Background Image"
+              value={homeData.heroImage}
+              onChange={(url) => setHomeData({ ...homeData, heroImage: url })}
               theme="dark"
             />
+          )}
+
+          {(homeData.heroMediaType === 'R2_VIDEO' || homeData.heroMediaType === 'CLOUDINARY_VIDEO') && (
+            <div className="space-y-4">
+              <MediaUploader
+                mode="video"
+                category="Hero"
+                label="Direct MP4 / WebM Hero Video (R2 Storage)"
+                value={homeData.heroVideoUrl}
+                onChange={(url) => setHomeData({ ...homeData, heroVideoUrl: url })}
+                theme="dark"
+              />
+
+              {/* Hero Video Sound ON / OFF Switch */}
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  {homeData.heroVideoSound ? (
+                    <Volume2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                  ) : (
+                    <VolumeX className="w-5 h-5 text-rose-400 shrink-0" />
+                  )}
+                  <div>
+                    <h4 className="text-xs font-extrabold text-white">Hero Video Audio / Sound</h4>
+                    <p className="text-[11px] text-slate-400">
+                      {homeData.heroVideoSound
+                        ? 'Sound is ON — Website hero video plays with audio enabled.'
+                        : 'Sound is OFF — Website hero video plays silently (muted).'}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setHomeData({ ...homeData, heroVideoSound: !homeData.heroVideoSound })}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center gap-2 border shrink-0 ${
+                    homeData.heroVideoSound
+                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-md'
+                      : 'bg-slate-800 text-slate-400 border-slate-700'
+                  }`}
+                >
+                  {homeData.heroVideoSound ? '🔊 SOUND ON' : '🔇 SOUND OFF'}
+                </button>
+              </div>
+            </div>
           )}
 
           {homeData.heroMediaType === 'YOUTUBE' && (

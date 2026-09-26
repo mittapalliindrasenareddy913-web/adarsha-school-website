@@ -36,17 +36,13 @@ import {
   Building2,
   Users,
   Laptop,
-  X
+  X,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 
 // Leadership Card Image Component with browser download shimmer & explicit empty state
 function LeadershipCardImage({ photo, alt, roleLabel, name, designation, isHome = true }) {
-  const [imgLoaded, setImgLoaded] = useState(false);
-
-  useEffect(() => {
-    setImgLoaded(false);
-  }, [photo]);
-
   const Icon = isHome ? GraduationCap : Award;
   const accentColor = isHome ? "text-amber-400" : "text-emerald-400";
   const badgeBorder = isHome ? "border-amber-500/30" : "border-emerald-500/30";
@@ -56,21 +52,13 @@ function LeadershipCardImage({ photo, alt, roleLabel, name, designation, isHome 
   return (
     <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-900 border border-slate-200">
       {photo ? (
-        <>
-          {!imgLoaded && (
-            <div className="absolute inset-0 bg-slate-800 animate-pulse rounded-xl z-10" />
-          )}
-          <img
-            src={photo}
-            alt={alt || roleLabel}
-            fetchPriority="high"
-            decoding="async"
-            onLoad={() => setImgLoaded(true)}
-            className={`w-full h-full object-cover rounded-xl transition-opacity duration-300 ${
-              imgLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        </>
+        <img
+          src={photo}
+          alt={alt || roleLabel}
+          fetchPriority="high"
+          decoding="async"
+          className="w-full h-full object-cover rounded-xl"
+        />
       ) : (
         <div className="w-full h-full bg-gradient-to-br from-[#0B192C] via-[#1E3E62] to-slate-900 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
           <Icon className={`w-12 h-12 ${accentColor} opacity-80`} />
@@ -92,33 +80,70 @@ function LeadershipCardImage({ photo, alt, roleLabel, name, designation, isHome 
   );
 }
 
-// Layout-matching Skeleton component shown strictly while CMS settings load
-function LeadershipSkeleton() {
+// Hero Video Player component supporting CMS Sound ON/OFF setting & browser autoplay policy
+function HeroVideoPlayer({ videoUrl, soundEnabled }) {
+  const videoRef = useRef(null);
+  const [userMutedOverride, setUserMutedOverride] = useState(null);
+
+  const effectiveMuted = userMutedOverride !== null ? userMutedOverride : !soundEnabled;
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    const v = videoRef.current;
+
+    v.muted = effectiveMuted;
+    const playPromise = v.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // If unmuted autoplay was restricted by browser policy, fallback to muted autoplay
+        v.muted = true;
+        v.play().catch(() => {});
+      });
+    }
+  }, [videoUrl, effectiveMuted]);
+
+  const toggleSound = (e) => {
+    e.stopPropagation();
+    const nextMuted = !effectiveMuted;
+    setUserMutedOverride(nextMuted);
+    if (videoRef.current) {
+      videoRef.current.muted = nextMuted;
+      if (nextMuted === false) {
+        videoRef.current.play().catch(() => {});
+      }
+    }
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-      {[1, 2].map((idx) => (
-        <div key={idx} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 space-y-4">
-          <div className="space-y-4">
-            <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden bg-slate-200 animate-pulse">
-              <div className="absolute bottom-4 left-4 right-4 space-y-2">
-                <div className="h-3 w-16 bg-slate-300 rounded animate-pulse" />
-                <div className="h-5 w-40 bg-slate-300 rounded animate-pulse" />
-                <div className="h-3 w-24 bg-slate-300 rounded animate-pulse" />
-              </div>
-            </div>
-            <div className="h-10 w-full bg-slate-100 rounded-xl animate-pulse" />
-            <div className="space-y-2 pt-1">
-              <div className="h-3 w-full bg-slate-100 rounded animate-pulse" />
-              <div className="h-3 w-5/6 bg-slate-100 rounded animate-pulse" />
-              <div className="h-3 w-4/6 bg-slate-100 rounded animate-pulse" />
-            </div>
-          </div>
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-            <div className="h-3 w-44 bg-slate-100 rounded animate-pulse" />
-          </div>
-        </div>
-      ))}
-    </div>
+    <>
+      <video
+        ref={videoRef}
+        src={videoUrl}
+        autoPlay
+        loop
+        muted={effectiveMuted}
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-60 sm:opacity-75 transition-all duration-700"
+      />
+      <button
+        type="button"
+        onClick={toggleSound}
+        className="absolute bottom-4 right-4 z-20 px-3 py-1.5 rounded-full bg-[#0B192C]/80 backdrop-blur-md text-amber-400 border border-amber-500/30 text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-lg hover:bg-[#0B192C] transition-all cursor-pointer"
+        title={effectiveMuted ? "Click to Enable Audio" : "Click to Mute Audio"}
+      >
+        {effectiveMuted ? (
+          <>
+            <VolumeX className="w-4 h-4 text-rose-400" />
+            <span>Sound OFF</span>
+          </>
+        ) : (
+          <>
+            <Volume2 className="w-4 h-4 text-emerald-400" />
+            <span>Sound ON</span>
+          </>
+        )}
+      </button>
+    </>
   );
 }
 
@@ -141,24 +166,30 @@ export default function Home() {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState({ url: '', title: '' });
 
+  const [dataLoaded, setDataLoaded] = useState(false);
+
   useEffect(() => {
     async function loadData() {
       try {
-        const evs = await api.getEvents();
-        const anns = await api.getAnnouncements();
-        const gal = await api.getGallery();
-        const ach = await api.getAchievements();
-        const facs = await api.getFacilities();
-        const acs = await api.getAcademics();
+        const [evs, anns, gal, ach, facs, acs] = await Promise.all([
+          api.getEvents().catch(() => null),
+          api.getAnnouncements().catch(() => null),
+          api.getGallery().catch(() => null),
+          api.getAchievements().catch(() => null),
+          api.getFacilities().catch(() => null),
+          api.getAcademics().catch(() => null)
+        ]);
 
-        if (Array.isArray(evs) && evs.length) setEvents(evs);
-        if (Array.isArray(anns) && anns.length) setAnnouncements(anns);
-        if (Array.isArray(gal) && gal.length) setGallery(gal);
-        if (Array.isArray(ach) && ach.length) setAchievements(ach);
-        if (Array.isArray(facs) && facs.length) setFacilities(facs);
+        if (Array.isArray(evs)) setEvents(evs);
+        if (Array.isArray(anns)) setAnnouncements(anns);
+        if (Array.isArray(gal)) setGallery(gal);
+        if (Array.isArray(ach)) setAchievements(ach);
+        if (Array.isArray(facs)) setFacilities(facs);
         if (acs) setAcademics(acs);
       } catch (err) {
         console.warn('Backend API connection note:', err.message);
+      } finally {
+        setDataLoaded(true);
       }
     }
     loadData();
@@ -166,19 +197,21 @@ export default function Home() {
 
   const { siteSettings, rawSettings, loading } = useSiteSettings();
 
-  // Dynamic Content Collections with Fallbacks
+  // Dynamic Content Collections: Prioritize CMS API data when loaded
   const displaySite = siteSettings || siteData || siteContent;
 
   const heroTagline = displaySite?.home?.heroTagline || displaySite?.tagline || "Bringing corporate-standard education to every child at affordable and accessible fees.";
   const heroSubTagline = displaySite?.home?.heroSubTagline || displaySite?.subTagline || "కార్పొరేట్ స్థాయి విద్యను అందుబాటు ఫీజులతో ప్రతి విద్యార్థికి అందించడమే మా లక్ష్యం";
+  const heroVideoUrl = displaySite?.home?.heroVideoUrl || displaySite?.heroVideoUrl || siteContent?.home?.heroVideoUrl || "https://pub-178f89930dcd42dc9acf32d9cb439925.r2.dev/school/hero/whatsapp-video-2026-09-07-at-10-27-49-pm-2ddc5c9c-ef2c-4510-812f-97a589e5300c.mp4";
+  const heroVideoSoundEnabled = displaySite?.home?.heroVideoSound !== undefined ? displaySite.home.heroVideoSound : (displaySite?.heroVideoSound !== undefined ? displaySite.heroVideoSound : true);
 
   const displayStats = (siteData?.stats?.length ? siteData.stats : siteContent.stats) || [];
-  const displayAcademics = (academics?.levels?.length ? academics.levels : (Array.isArray(academics) && academics.length ? academics : academicsData.levels)) || [];
-  const displayFacilities = (facilities?.length ? facilities : facilitiesData) || [];
-  const displayEvents = (events?.length ? events : eventsData) || [];
-  const displayAnnouncements = (announcements?.length ? announcements : announcementsData) || [];
-  const displayGallery = (gallery?.length ? gallery : galleryData) || [];
-  const displayAchievements = (achievements?.length ? achievements : achievementsData) || [];
+  const displayAcademics = dataLoaded && academics ? (academics.levels || (Array.isArray(academics) ? academics : [])) : (academics?.levels || academicsData.levels || []);
+  const displayFacilities = dataLoaded && facilities !== null ? facilities : (facilitiesData || []);
+  const displayEvents = dataLoaded && events !== null ? events : (eventsData || []);
+  const displayAnnouncements = dataLoaded && announcements !== null ? announcements : (announcementsData || []);
+  const displayGallery = dataLoaded && gallery !== null ? gallery : (galleryData || []);
+  const displayAchievements = dataLoaded && achievements !== null ? achievements : (achievementsData || []);
 
   // Announcement Filtering: Only PUBLISHED & current time >= start & current time < end
   const now = new Date();
@@ -277,28 +310,7 @@ export default function Home() {
           1. FULL-WIDTH PHOTOGRAPHIC HERO SECTION (DESKTOP & MOBILE)
          ================================================== */}
       <section className="relative min-h-[380px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-start bg-[#0B192C] text-white overflow-hidden py-6 sm:py-12 px-4 sm:px-8 lg:px-16 border-b border-slate-800">
-        
-        {/* Base Hero Image Background (Always rendered as poster layer so no dark blank state appears while video loads) */}
-        <img
-          src={displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg}
-          alt="Adarsha High School Hero"
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover opacity-60 sm:opacity-75 transition-all duration-700 pointer-events-none"
-        />
-
-        {/* Dynamic Cloudflare R2 Hero Background Video (Rendered on top when heroMediaType === 'R2_VIDEO') */}
-        {(displaySite?.home?.heroMediaType || siteData?.heroMediaType || siteSettings?.heroMediaType) === 'R2_VIDEO' && (displaySite?.home?.heroVideoUrl || siteData?.heroVideoUrl || siteSettings?.heroVideoUrl) && (
-          <video
-            src={displaySite?.home?.heroVideoUrl || siteData?.heroVideoUrl || siteSettings?.heroVideoUrl}
-            poster={displaySite?.home?.heroImage || siteData?.heroImage || images.heroBg}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-60 transition-all duration-700"
-          />
-        )}
+        <HeroVideoPlayer videoUrl={heroVideoUrl} soundEnabled={heroVideoSoundEnabled} />
         
         {/* Cinematic Left-to-Right Overlay (Desktop: Left text readability, Mobile: Lighter gradient so hero photo is clearly visible) */}
         <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-[#0B192C]/80 via-[#0B192C]/45 to-black/20" />
@@ -435,9 +447,7 @@ export default function Home() {
             </p>
           </div>
 
-          {loading && !rawSettings ? (
-            <LeadershipSkeleton />
-          ) : (() => {
+          {(() => {
             const activeSettings = rawSettings || siteSettings;
             const corr = activeSettings?.leadership?.correspondent || {};
             const prin = activeSettings?.leadership?.principal || {};
@@ -523,8 +533,7 @@ export default function Home() {
       {/* ==================================================
           4. ACADEMICS (Requirement #11)
          ================================================== */}
-      {displayAcademics && displayAcademics.length > 0 && (
-        <section className="py-12 sm:py-16 bg-[#F8FAFC] border-t border-slate-200 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-12 sm:py-16 bg-[#F8FAFC] border-t border-slate-200 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <SectionHeading
             badge="ACADEMICS"
             title="Learning Designed for Every Stage"
@@ -588,13 +597,11 @@ export default function Home() {
             })}
           </div>
         </section>
-      )}
 
       {/* ==================================================
           5. CAMPUS LIFE (Requirement #12)
          ================================================== */}
-      {campusLifePhotos && campusLifePhotos.length > 0 && (
-        <section className="py-12 sm:py-16 bg-[#0B192C] text-white border-y border-slate-800 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="py-12 sm:py-16 bg-[#0B192C] text-white border-y border-slate-800 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="max-w-7xl mx-auto space-y-8">
             
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
@@ -661,13 +668,11 @@ export default function Home() {
 
           </div>
         </section>
-      )}
 
       {/* ==================================================
           6. OUR FACILITIES (Requirement #13)
          ================================================== */}
-      {displayFacilities && displayFacilities.length > 0 && (
-        <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
+      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
           
           {/* Centered Top Heading Block (Above Photos / Cards in Middle) */}
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -717,13 +722,11 @@ export default function Home() {
           </div>
 
         </section>
-      )}
 
       {/* ==================================================
           7. ACHIEVEMENTS (Requirement #14)
          ================================================== */}
-      {displayAchievements && displayAchievements.length > 0 && (
-        <section className="py-12 sm:py-16 bg-[#F1F5F9] border-y border-slate-200 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 bg-[#F1F5F9] border-y border-slate-200 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto space-y-8">
             
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -769,13 +772,11 @@ export default function Home() {
 
           </div>
         </section>
-      )}
 
       {/* ==================================================
           8. EVENTS (Requirement #15)
          ================================================== */}
-      {displayEvents && displayEvents.length > 0 && (
-        <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
@@ -842,7 +843,6 @@ export default function Home() {
           </div>
 
         </section>
-      )}
 
       {/* ==================================================
           10. ADMISSIONS CTA (Requirement #17)

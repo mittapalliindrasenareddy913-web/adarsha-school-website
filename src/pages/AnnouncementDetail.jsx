@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../services/api';
+import { announcementsData } from '../data/announcements';
 import SEO from '../components/SEO';
 import { Calendar, ArrowLeft, AlertCircle } from 'lucide-react';
 
 export default function AnnouncementDetail() {
   const { slug } = useParams();
-  const [announcement, setAnnouncement] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [announcement, setAnnouncement] = useState(() => (announcementsData || []).find(a => a.slug === slug || a.id === slug || a._id === slug) || null);
+  const [loading, setLoading] = useState(!announcement);
 
   useEffect(() => {
     async function loadNotice() {
-      setLoading(true);
-      const data = await api.getAnnouncementBySlug(slug);
-      setAnnouncement(data);
-      setLoading(false);
+      try {
+        const data = await api.getAnnouncementBySlug(slug);
+        if (data) setAnnouncement(data);
+      } catch (err) {
+        console.warn(err);
+      } finally {
+        setLoading(false);
+      }
     }
     loadNotice();
   }, [slug]);
@@ -22,7 +27,7 @@ export default function AnnouncementDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0B192C] text-white flex items-center justify-center pt-24 font-sans">
-        <p className="text-sm font-bold text-amber-400 animate-pulse">Loading Notice Details...</p>
+        <p className="text-sm font-bold text-amber-400">Loading Notice Details...</p>
       </div>
     );
   }

@@ -49,14 +49,7 @@ export default function Events() {
           subtitle="Discover upcoming and past school celebrations."
         />
 
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {events.map((ev, idx) => (
               <div key={ev.id || idx} className="bg-white rounded-lg border border-slate-200 border-t-2 border-t-orange-600 overflow-hidden shadow-xs hover:shadow-md transition-all group flex flex-col justify-between">
                 <div>
@@ -67,7 +60,7 @@ export default function Events() {
                           src={ev.coverImage || ev.imageUrl || ev.url}
                           alt={ev.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading={idx < 4 ? "eager" : "lazy"}
+                          loading="eager"
                           decoding="async"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 via-transparent to-transparent" />
@@ -114,7 +107,6 @@ export default function Events() {
               </div>
             ))}
           </div>
-        )}
       </section>
 
     </div>

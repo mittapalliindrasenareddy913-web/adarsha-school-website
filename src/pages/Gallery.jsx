@@ -29,7 +29,8 @@ export default function Gallery() {
     loadData();
   }, []);
 
-  const categories = ['All', 'Campus', 'Classrooms', 'Events', 'Sports', 'Activities'];
+  const dynamicCategories = ['All', ...new Set(gallery.map(item => item.category).filter(Boolean))];
+  const categories = dynamicCategories.length > 1 ? dynamicCategories : ['All', 'Campus', 'Classrooms', 'Events', 'Sports', 'Activities'];
 
   const filteredItems = activeCategory === 'All'
     ? gallery
@@ -72,13 +73,7 @@ export default function Gallery() {
         </div>
 
         {/* Grid Gallery */}
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
-            ))}
-          </div>
-        ) : filteredItems.length > 0 ? (
+        {filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredItems.map((item, idx) => {
               const itemUrl = item.url || item.imageUrl || item.src;
@@ -107,7 +102,7 @@ export default function Gallery() {
                           src={itemUrl}
                           alt={item.title || "Adarsha Campus Photo"}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading={idx < 6 ? "eager" : "lazy"}
+                          loading="eager"
                           fetchPriority={idx < 3 ? "high" : "auto"}
                           decoding="async"
                         />

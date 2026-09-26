@@ -26,11 +26,11 @@ export default function Login() {
       if (res && res.success) {
         navigate('/admin/dashboard');
       } else {
-        setError('Invalid email or password.');
+        setError(res?.message || 'Invalid email or password.');
       }
     } catch (err) {
       setLoading(false);
-      setError('Invalid email or password.');
+      setError(err?.message || 'Invalid email or password.');
     }
   };
 

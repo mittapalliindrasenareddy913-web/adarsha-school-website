@@ -48,14 +48,7 @@ export default function Achievements() {
           subtitle="A timeline of milestones accomplished by our students and school community."
         />
 
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {achievements.map((ach, idx) => {
               const isTopHonor = idx === 0 || ach.category?.toLowerCase().includes('excellence') || ach.category?.toLowerCase().includes('distinction');
               
@@ -68,7 +61,7 @@ export default function Achievements() {
                           src={ach.image || ach.imageUrl || ach.url}
                           alt={ach.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          loading={idx < 4 ? "eager" : "lazy"}
+                          loading="eager"
                           decoding="async"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B192C]/80 via-transparent to-transparent" />
@@ -117,7 +110,6 @@ export default function Achievements() {
               );
             })}
           </div>
-        )}
       </section>
 
     </div>

@@ -40,14 +40,16 @@ export function AdminAuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const res = await api.adminLogin(email, password);
+      const cleanEmail = (email || '').trim();
+      const cleanPass = (password || '').trim();
+      const res = await api.adminLogin(cleanEmail, cleanPass);
       if (res && res.success && res.user) {
         setAdmin(res.user);
         return { success: true, user: res.user };
       }
-      return { success: false, message: 'Invalid email or password.' };
+      return { success: false, message: res?.message || 'Invalid email or password.' };
     } catch (err) {
-      return { success: false, message: 'Invalid email or password.' };
+      return { success: false, message: err?.message || 'Invalid email or password.' };
     }
   };
 

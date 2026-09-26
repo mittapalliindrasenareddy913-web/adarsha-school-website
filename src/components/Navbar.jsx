@@ -460,7 +460,7 @@ export default function Navbar() {
         <div className="bg-[#D97706] text-white text-xs font-bold py-2 px-3 sm:px-4 overflow-hidden border-b border-amber-600/40 relative z-30 w-full max-w-full">
           <div className="max-w-7xl mx-auto flex items-center gap-2.5 w-full min-w-0">
             <div className="flex items-center gap-1 shrink-0 px-2 py-0.5 rounded bg-[#0B192C] text-amber-400 text-[10px] font-black uppercase tracking-wider shadow-xs">
-              <BellRing className="w-3.5 h-3.5 animate-pulse text-amber-400" />
+              <BellRing className="w-3.5 h-3.5 text-amber-400" />
               <span>NOTICE</span>
             </div>
             

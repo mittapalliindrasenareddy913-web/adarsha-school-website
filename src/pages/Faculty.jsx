@@ -48,14 +48,7 @@ export default function Faculty() {
           subtitle="Qualified educators guiding primary, middle, and secondary students."
         />
 
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {faculty.map((teacher, idx) => (
               <div key={teacher.id || idx} className="bg-white rounded-lg border border-slate-200 border-t-2 border-t-indigo-600 shadow-xs hover:shadow-md overflow-hidden transition-all group space-y-4 p-6 text-center">
                 <div className="relative w-28 h-28 rounded-full overflow-hidden mx-auto bg-slate-100 border-2 border-indigo-500/40 flex items-center justify-center shadow-xs">
@@ -64,7 +57,7 @@ export default function Faculty() {
                       src={teacher.photo || teacher.imageUrl || teacher.url}
                       alt={teacher.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading={idx < 4 ? "eager" : "lazy"}
+                      loading="eager"
                       decoding="async"
                     />
                   ) : (
@@ -86,7 +79,6 @@ export default function Faculty() {
               </div>
             ))}
           </div>
-        )}
       </section>
 
     </div>

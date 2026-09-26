@@ -48,14 +48,7 @@ export default function Facilities() {
           subtitle="Explore the key facilities built to foster student growth, safety, and physical well-being."
         />
 
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="h-64 rounded-lg bg-slate-800 animate-pulse border border-slate-700" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
             {facilities.map((fac, idx) => (
               <div key={fac.id || idx} className="bg-white rounded-lg border border-slate-200 border-t-2 border-t-green-600 shadow-xs overflow-hidden flex flex-col justify-between group">
                 <div>
@@ -108,7 +101,6 @@ export default function Facilities() {
               </div>
             ))}
           </div>
-        )}
       </section>
 
     </div>

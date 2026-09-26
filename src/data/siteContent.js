@@ -13,11 +13,32 @@ export const siteContent = {
     heroTagline: "Bringing corporate-standard education to every child at affordable and accessible fees.",
     heroSubTagline: "కార్పొరేట్ స్థాయి విద్యను అందుబాటు ఫీజులతో ప్రతి విద్యార్థికి అందించడమే మా లక్ష్యం",
     heroMediaType: "R2_VIDEO",
-    heroImage: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80",
-    heroVideoUrl: "https://pub-178f89930dcd42dc9acf32d9cb439925.r2.dev/school/hero/adarsha-school-video-2556c2ed-06fc-4864-a5e4-609446c81df2.mp4",
+    heroImage: "https://pub-178f89930dcd42dc9acf32d9cb439925.r2.dev/school/hero/adarsha-school-tamplet-77629287-6c09-4029-9757-30354a5bbf21.jpeg",
+    heroVideoUrl: "https://pub-178f89930dcd42dc9acf32d9cb439925.r2.dev/school/hero/whatsapp-video-2026-09-07-at-10-27-49-pm-2ddc5c9c-ef2c-4510-812f-97a589e5300c.mp4",
+    heroVideoSound: true,
     heroYouTubeUrl: "",
     aboutSectionHeading: "Welcome to Adarsha High School",
     aboutText: "At Adarsha High School, we foster an educational culture that balances conceptual understanding with moral values, physical well-being, and creative expression. Every student is encouraged to discover their unique strengths in a safe, inspiring environment."
+  },
+
+  // Leadership Desk CMS Data
+  leadership: {
+    correspondent: {
+      name: "M.INDRANI , M Tech",
+      designation: "Director",
+      photo: "https://pub-178f89930dcd42dc9acf32d9cb439925.r2.dev/school/faculty/cropped-whatsapp-image-2026-09-04-at-5-44-56-pm-d64e6c8e-7a6e-4212-99f4-6d9139e94af4.jpeg",
+      message: "M. Indrani is a Software Engineer with 16 years of experience in the IT industry. Along with her professional expertise, she is also a Yoga Trainer and Meditation Practitioner, dedicated to promoting physical, mental, and emotional well-being.\n\nWith a strong passion for education and a vision for a better future, she has taken the initiative to Re-Establish Adarsha School. Her aim is to provide quality education, strong academic foundations, and holistic development to every student.\n\nShe believes that education is not only about academic success but also about developing discipline, confidence, good values, creativity, and a positive attitude. Through the integration of modern teaching methods, yoga, meditation, and value-based learning, she strives to create an environment where children can learn, grow, and become responsible citizens.\n\nHer vision is to make Adarsha School a place where every child receives the right guidance, encouragement, and opportunities to achieve their dreams. She is committed to building a school that focuses on excellence in education, character development, and the overall well-being of students.\n\nHer mission is simple: to provide good education and help every child build a bright and successful future.",
+      quote: "Her mission is simple: to provide good education and help every child build a bright and successful future",
+      enabled: true
+    },
+    principal: {
+      name: "K. Nagi Reddy, M.Sc., B.Ed",
+      designation: "Principal",
+      photo: "",
+      message: "K. Nagi Reddy is the Principal of Adarsha School, Thamballapalli, with 16+ years of experience as a Biology Teacher and Lecturer.\n\nWith his extensive experience in teaching and academic leadership, he is committed to maintaining high standards of education, discipline, and student development.\n\nAt Adarsha School, Thamballapalli, K. Nagi Reddy aims to guide students towards strong academic foundations and future success.",
+      quote: "With experience, knowledge, and dedication, he inspires students to learn Biology with confidence and curiosity",
+      enabled: true
+    }
   },
 
   // Hero Copy
